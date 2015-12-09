@@ -1,4 +1,4 @@
-# SPA podcatcher
+# SPA podcatcher built with Rails API and React/Flux
 
 ## App features:
 - subscribe to podcasts and have them listed in a feed
