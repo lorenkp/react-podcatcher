@@ -2,12 +2,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 
-var Search = require('./components/search.jsx');
+var SearchBox = require('./components/search/searchBox');
 
 
 document.addEventListener("DOMContentLoaded", function() {
   ReactDOM.render(
-    <Search />,
+    <SearchBox />,
     document.getElementById('root')
   );
 });

@@ -1,8 +1,8 @@
 var React = require('react');
-var ApiUtil = require('../util/apiUtil.js')
+var ApiUtil = require('../../util/apiUtil.js')
 
 var ENTER_KEY_CODE = 13;
-var SearchBox = React.createClass({
+var SearchInput = React.createClass({
 
 
   getInitialState: function() {
@@ -38,4 +38,4 @@ var SearchBox = React.createClass({
   }
 });
 
-module.exports = SearchBox;
+module.exports = SearchInput;

@@ -1,6 +1,7 @@
+var ApiActions = require('../actions/apiActions.js')
+
 module.exports = {
   fetchSearchResults: function(query) {
-    debugger
     $.ajax({
       method: 'GET',
       url: 'api/search',
@@ -8,7 +9,7 @@ module.exports = {
         term: query
       },
       success: function(results) {
-        console.log(results);
+        ApiActions.receiveSearchResults(results);
       }
     })
   }
