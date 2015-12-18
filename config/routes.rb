@@ -3,12 +3,15 @@ Rails.application.routes.draw do
 
   root 'static#main'
 
+  # namespace :api do
+  #   resources :search do
+  #     collection do
+  #       get 'search'
+  #       get 'show'
+  #     end
+  #   end
+  # end
   namespace :api do
-    resources :podcasts do
-      collection do
-        get 'search'
-        get 'show'
-      end
-    end
+    resources :search
   end
 end

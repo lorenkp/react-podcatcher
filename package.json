@@ -1,0 +1,39 @@
+{
+  "name": "podcast_app",
+  "version": "1.0.0",
+  "description": "## App features: - subscribe to podcasts and have them listed in a feed - clicking on the podcast will reveal the podcast info, along with a list of episodes - will indicate if the podcast has been played - save playback position - make playlists",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorenkp/react_podcast_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lorenkp/react_podcast_app/issues"
+  },
+  "homepage": "https://github.com/lorenkp/react_podcast_app#readme",
+  "dependencies": {
+    "babel-core": "^6.3.17",
+    "babel-loader": "^6.2.0",
+    "babel-preset-react": "^6.3.13",
+    "bootstrap": "^3.3.6",
+    "flux": "^2.1.1",
+    "jquery": "^2.1.4",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "webpack": "^1.12.9"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-plugin-react": "^3.11.3"
+  }
+}

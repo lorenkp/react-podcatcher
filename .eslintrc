@@ -1,0 +1,18 @@
+{
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "amd": true,
+      "jquery": true,
+      "node": true
+    },
+    rules: {
+      "semi": 0
+    }
+}
