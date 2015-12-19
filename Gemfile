@@ -25,12 +25,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'crack'
 gem 'puma'
 
-# source 'https://rails-assets.org' do
-#   gem 'rails-assets-jquery'
-#   gem 'rails-assets-react'
-#   gem 'rails-assets-flux'
-#   gem 'rails-assets-eventEmitter'
-# end
+source 'https://rails-assets.org' do
+  # gem 'rails-assets-jquery'
+  # gem 'rails-assets-react'
+  # gem 'rails-assets-flux'
+  # gem 'rails-assets-eventEmitter'
+  gem 'rails-assets-material-design-lite'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -45,6 +46,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'pry-byebug'
+  gem 'rubocop'
 end
 
 group :development do

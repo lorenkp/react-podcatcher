@@ -1,5 +1,6 @@
 class Api::SearchController < ApplicationController
   FIELDS = [
+    'artistName',
     'collectionName',
     'feedUrl',
     'artworkUrl100'
@@ -16,7 +17,7 @@ class Api::SearchController < ApplicationController
   private
 
   def itunes_query_results
-    itunes_query = "https://itunes.apple.com/search?entity=podcast&term=#{params[:term]}"
+    itunes_query = "https://itunes.apple.com/search?entity=podcast&attribute=titleTerm&limit=10&term=#{params[:term]}"
     uri = URI(itunes_query)
     response = Net::HTTP.get(uri)
     JSON.parse(response)['results']

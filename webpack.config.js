@@ -3,7 +3,7 @@ var webpack = require("webpack")
 
 module.exports = {
   context: __dirname,
-  entry: "./frontend/podcastApp.jsx",
+  entry: "./frontend/app.jsx",
   output: {
     path: path.join(__dirname, 'app', 'assets', 'javascripts'),
     filename: "bundle.js",
@@ -24,7 +24,7 @@ module.exports = {
       exclude: /(node_modules|bower_components)/,
       loader: 'babel',
       query: {
-        presets: ["react"]
+        presets: ["react", "es2015"]
       }
     }]
   },

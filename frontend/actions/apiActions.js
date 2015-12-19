@@ -1,5 +1,5 @@
-var Dispatcher = require('../dispatcher/dispatcher.js');
-var SearchResultsConstants = require('../constants/searchResultsConstants.js');
+var Dispatcher = require('../dispatcher/dispatcher');
+var SearchResultsConstants = require('../constants/searchResultsConstants');
 
 module.exports = {
   receiveSearchResults: function(results) {

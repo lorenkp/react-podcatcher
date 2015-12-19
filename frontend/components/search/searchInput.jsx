@@ -15,27 +15,26 @@ var SearchInput = React.createClass({
     ApiUtil.fetchSearchResults(this.state.value);
   },
 
-  render: function() {
-    return (
-      <input
-        onChange={this._onChange}
-        value={this.state.value}
-        onKeyDown={this._onKeyDown}
-      />
-    );
-  },
-
-  _onChange: function(event) {
+  handleOnChange: function(event) {
     this.setState({
       value: event.target.value
     })
   },
 
-  _onKeyDown: function(event) {
+  handleOnKeyDown: function(event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       this.fetchSearchResults();
     }
+  },
+
+  render: function() {
+    return (
+      <input onChange={ this.handleOnChange } onKeyDown={ this.handleOnKeyDown } value={ this.state.value }
+      />
+
+      );
   }
+
 });
 
 module.exports = SearchInput;

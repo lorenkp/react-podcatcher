@@ -33,9 +33,9 @@ var SearchBox = React.createClass({
     return (
       <div className="searchBox">
         <SearchInput />
-        <SearchResultTable results={this.state.results} />
+        <SearchResultTable results={ this.state.results } />
       </div>
-    );
+      );
 
   }
 });
