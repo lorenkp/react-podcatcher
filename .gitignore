@@ -12,6 +12,7 @@
 !/log/.keep
 /tmp
 
+/app/assets/javascripts/bundle.*
 node_modules
-bundle.js.*
+bundle.js.map
 .DS_Store

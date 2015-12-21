@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchActions from '../../actions/SearchActions';
 import SearchResultStore from '../../stores/searchResult';
-import Episode from '../Episode';
+import PodcastTable from './PodcastTable';
 
 let listenerToken
 
@@ -14,7 +14,9 @@ function getListing() {
 
 var PodcastShow = React.createClass({
   getInitialState: function() {
-    return getListing()
+    return {
+      listing: []
+    }
   },
 
   componentDidMount: function() {
@@ -33,14 +35,7 @@ var PodcastShow = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>{ this.state.listing.pop() }</h1>
-        <ul>
-          { this.state.listing.map(function(episode, index) {
-              return (
-                <Episode key={ index } episodeInfo={ episode } />
-                )
-            }) }
-        </ul>
+        <PodcastTable listing={ this.state.listing } />
       </div>
       )
   }
