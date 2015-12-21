@@ -1,5 +1,5 @@
-var React = require('react');
-var ApiUtil = require('../../util/apiUtil.js')
+import React from 'react';
+import SearchActions from '../../actions/SearchActions';
 
 var ENTER_KEY_CODE = 13;
 var SearchInput = React.createClass({
@@ -12,7 +12,7 @@ var SearchInput = React.createClass({
   },
 
   fetchSearchResults: function() {
-    ApiUtil.fetchSearchResults(this.state.value);
+    SearchActions.fetchSearchResults(this.state.value);
   },
 
   handleOnChange: function(event) {

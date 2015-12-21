@@ -3,21 +3,35 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var SearchResultsStore = new Store(AppDispatcher);
 var SearchResultsConstants = require('../constants/searchResultsConstants');
 
-var _results = []
+var _results = [];
+var _listing = [];
 
-function add(results) {
+function addResults(results) {
   _results = results
 }
 
-SearchResultsStore.getAll = function() {
-  return _results;
+function addListing(listing) {
+  _listing = listing
+}
+
+SearchResultsStore.getResults = function() {
+  return _results
+}
+
+SearchResultsStore.getListing = function() {
+  return _listing
 }
 
 SearchResultsStore.__onDispatch = function(action) {
   switch (action.actionType) {
     case SearchResultsConstants.SEARCH_RESULTS_RECEIVED:
-      add(action.results);
+      addResults(action.results);
       SearchResultsStore.__emitChange();
+      break;
+    case SearchResultsConstants.PODCAST_LISTING_RECEIVED:
+      addListing(action.podcast)
+      SearchResultsStore.__emitChange();
+      break;
   }
 };
 

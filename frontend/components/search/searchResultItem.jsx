@@ -1,28 +1,30 @@
-var React = require('react');
+import React from 'react';
+import { Link } from 'react-router';
 
-var SearchResultItem = React.createClass({
 
-  handleClick: function(e) {
-    e.preventDefault();
-    this.props.onPodcastSelect;
-  },
+
+const SearchResultItem = React.createClass({
+
 
   render: function() {
-    var podcast = this.props.podcast
-    var title = podcast.collectionName;
-    var artworkUrl = podcast.artworkUrl100;
-    var artist = podcast.artistName;
-
+    const podcast = this.props.podcast
+    const title = podcast.collectionName;
+    const artworkUrl = podcast.artworkUrl100;
+    const artist = podcast.artistName;
+    const collectionId = podcast.collectionId;
+    const searchLink = 'search/' + collectionId;
     return (
-      <a className="search-result-item" onClick={ this.handleClick }>
-        <img src={ artworkUrl }></img>
-        <div className="podcast-description">
-          <p className="title">
-            { title } </p>
-          <p className="artist">
-            { artist } </p>
-        </div>
-      </a>
+      <Link to={ searchLink }>
+      <img src={ artworkUrl }></img>
+      <div className="podcast-description">
+        <p className="title">
+          { title }
+        </p>
+        <p className="artist">
+          { artist }
+        </p>
+      </div>
+      </Link>
       );
   }
 

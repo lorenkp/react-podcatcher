@@ -1,13 +1,13 @@
-var React = require('react');
-var SearchResultStore = require('../../stores/searchResult')
-var SearchResultTable = require('./searchResultTable');
-var SearchInput = require('./searchInput');
+import React from 'react';
+import SearchResultStore from '../../stores/searchResult';
+import SearchResultTable from './searchResultTable';
+import SearchInput from './searchInput';
 
-var listenerToken
+let listenerToken
 
 function getResults() {
   return {
-    results: SearchResultStore.getAll()
+    results: SearchResultStore.getResults()
   };
 }
 
@@ -31,9 +31,12 @@ var SearchBox = React.createClass({
 
   render: function() {
     return (
-      <div className="searchBox">
-        <SearchInput />
-        <SearchResultTable results={ this.state.results } />
+      <div>
+        <h1>{ 'Search' }</h1>
+        <div className="searchBox">
+          <SearchInput />
+          <SearchResultTable results={ this.state.results } />
+        </div>
       </div>
       );
 
