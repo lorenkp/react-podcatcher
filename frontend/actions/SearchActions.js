@@ -7,7 +7,7 @@ module.exports = {
     ApiUtil.fetchSearchResults(query);
   },
 
-  fetchPodcastListing: function(id) {
-    ApiUtil.fetchPodcastListing(id)
+  fetchPodcast: function(id) {
+    ApiUtil.fetchPodcast(id)
   }
-}
+};

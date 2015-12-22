@@ -1,26 +1,36 @@
 
 module.exports = {
-  fetchSearchResults: function(query) {
+  // fetchSearchResults: function(query) {
+  //   $.ajax({
+  //     method: 'GET',
+  //     url: 'api/search',
+  //     data: {
+  //       term: query
+  //     },
+  //     success: function(results) {
+  //       ApiActions.receiveSearchResults(results);
+  //     }
+  //   })
+  // },
+  // searching itunes for the one podcast, bringing back its index
+  fetchSearchResults: function(term) {
     $.ajax({
       method: 'GET',
-      url: 'api/search',
-      data: {
-        term: query
-      },
-      success: function(results) {
-        ApiActions.receiveSearchResults(results);
+      url: 'api/search/' + term,
+      success: function(podcast) {
+        ApiActions.receiveSearchResults(podcast);
       }
     })
   },
-  // searching itunes for the one podcast, bringing back its index
-  fetchPodcastListing: function(id) {
+
+  fetchPodcast: function(id) {
     $.ajax({
       method: 'GET',
-      url: 'api/search/' + id,
+      url: 'api/podcasts/' + id,
       success: function(podcast) {
-        ApiActions.receivePodcastListing(podcast);
+        ApiActions.receivedPodcast(podcast);
       }
-    })
+    });
   }
 };
 

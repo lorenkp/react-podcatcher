@@ -1,0 +1,4 @@
+module.exports = {
+  RECEIVED_PODCAST: 'RECEIVED_PODCAST',
+  PLAY_PODCAST: 'PLAY_PODCAST'
+}

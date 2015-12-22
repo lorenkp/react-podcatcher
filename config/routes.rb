@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   # end
   namespace :api do
     resources :search
+    resources :podcasts
   end
 end

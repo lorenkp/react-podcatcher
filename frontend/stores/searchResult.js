@@ -5,13 +5,21 @@ var SearchResultsConstants = require('../constants/searchResultsConstants');
 
 var _results = [];
 var _listing = [];
+var audioPlayerStatus = {};
 
 function addResults(results) {
-  _results = results
+  _results = results;
 }
 
 function addListing(listing) {
-  _listing = listing
+  _listing = listing;
+}
+
+function updateAudioPlayer(flag, mp3Link) {
+  audioPlayerStatus = {
+    podcastPlaying: flag,
+    mp3Link: mp3Link
+  };
 }
 
 SearchResultsStore.getResults = function() {
@@ -20,6 +28,10 @@ SearchResultsStore.getResults = function() {
 
 SearchResultsStore.getListing = function() {
   return _listing;
+}
+
+SearchResultsStore.getAudioPlayerStatus = function() {
+  return audioPlayerStatus;
 }
 
 SearchResultsStore.__onDispatch = function(action) {
@@ -32,6 +44,11 @@ SearchResultsStore.__onDispatch = function(action) {
       addListing(action.podcast)
       SearchResultsStore.__emitChange();
       break;
+    case SearchResultsConstants.PLAY_PODCAST:
+      updateAudioPlayer(true, action.mp3Link)
+      SearchResultsStore.__emitChange();
+      break;
+
   }
 };
 
