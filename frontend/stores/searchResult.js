@@ -15,11 +15,11 @@ function addListing(listing) {
 }
 
 SearchResultsStore.getResults = function() {
-  return _results
+  return _results;
 }
 
 SearchResultsStore.getListing = function() {
-  return _listing
+  return _listing;
 }
 
 SearchResultsStore.__onDispatch = function(action) {

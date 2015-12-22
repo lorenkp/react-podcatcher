@@ -2,6 +2,7 @@ import React from 'react';
 import SearchActions from '../../actions/SearchActions';
 import SearchResultStore from '../../stores/searchResult';
 import PodcastTable from './PodcastTable';
+import PodcastDescription from './PodcastDescription';
 
 let listenerToken
 
@@ -11,8 +12,7 @@ function getListing() {
   }
 }
 
-
-var PodcastShow = React.createClass({
+var PodcastView = React.createClass({
   getInitialState: function() {
     return {
       listing: []
@@ -33,13 +33,18 @@ var PodcastShow = React.createClass({
   },
 
   render: function() {
+
+    if (Object.keys(this.state.listing).length < 1) {
+      return null;
+    }
     return (
       <div>
-        <PodcastTable listing={ this.state.listing } />
+        <PodcastDescription description={ this.state.listing.description } />
+        <PodcastTable listing={ this.state.listing.episodes } />
       </div>
       )
   }
 
 });
 
-module.exports = PodcastShow;
+module.exports = PodcastView;

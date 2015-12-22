@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/search/searchBox';
-import PodcastShow from './components/podcast/PodcastShow';
+import PodcastView from './components/podcast/PodcastView';
 import { Link, Router, Route } from 'react-router';
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <Router>
       <Route path="/" component={ App } />
       <Route path="/search" component={ Search } />
-      <Route path="/search/:id" component={ PodcastShow } />
+      <Route path="/search/:id" component={ PodcastView } />
     </Router>),
     document.getElementById('root'));
 });

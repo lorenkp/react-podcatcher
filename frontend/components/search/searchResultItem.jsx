@@ -1,18 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-
-
 const SearchResultItem = React.createClass({
-
-
   render: function() {
     const podcast = this.props.podcast
     const title = podcast.collectionName;
-    const artworkUrl = podcast.artworkUrl100;
+    const artworkUrl = podcast.artworkUrl600;
     const artist = podcast.artistName;
     const collectionId = podcast.collectionId;
     const searchLink = 'search/' + collectionId;
+
     return (
       <Link to={ searchLink }>
       <img src={ artworkUrl }></img>

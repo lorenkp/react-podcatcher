@@ -1,9 +1,18 @@
 class Api::SearchController < ApplicationController
-  FIELDS = [
+  # keys for xml feed
+  XML_FIELDS = [
+    'title',
+    'itunes:author',
+    'link',
+    'description'
+  ]
+
+  # keys for itunes JSON response
+  ITUNES_FIELDS = [
     'artistName',
     'collectionName',
     'feedUrl',
-    'artworkUrl100',
+    'artworkUrl600',
     'collectionId'
   ]
 
@@ -14,26 +23,25 @@ class Api::SearchController < ApplicationController
 
   def show
     query = "https://itunes.apple.com/lookup?id=#{params[:id]}"
-    podcast_listing = itunes_query_results(query)[0]
-    podcast_feed_url = itunes_query_results(query)[0]['feedUrl']
-    xml_data = Net::HTTP.get_response(URI.parse(podcast_feed_url)).body
-    feed_hash = Crack::XML.parse(xml_data.to_s)
-    episodes = parse_episodes(feed_hash, 'item')
-    episodes << podcast_listing['collectionName']
-    # podcast name will be pulled from last index in array
-    render json: episodes
+    itunes_listing = itunes_query_results(query)[0]
+    feed_url = itunes_listing['feedUrl']
+    raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
+    hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
+    podcast_hash = construct_podcast_hash(hashed_xml)
+    podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
+    render json: podcast_hash
   end
 
   private
 
-  def parse_episodes(obj, key)
-    if obj.respond_to?(:key?) && obj.key?(key)
-      obj[key]
-    elsif obj.respond_to?(:each)
-      r = nil
-      obj.find { |*a| r = parse_episodes(a.last, key) }
-      r
+  def construct_podcast_hash(hashed_xml)
+    podcast_hash = {}
+    podcast_hash[:description] = {}
+    XML_FIELDS.each do |field|
+      podcast_hash[:description][field] = hashed_xml[field]
     end
+    podcast_hash[:episodes] = hashed_xml['item']
+    podcast_hash
   end
 
   def itunes_query_results(query)
@@ -45,12 +53,10 @@ class Api::SearchController < ApplicationController
   def hash_podcasts(json_results)
     json_results.map do |podcast|
       podcast_hash = {}
-      FIELDS.each do |info|
+      ITUNES_FIELDS.each do |info|
         podcast_hash[info] = podcast[info]
       end
       podcast_hash
     end
   end
 end
-
-# xml_data = Net::HTTP.get_response(URI.parse(http://www.bbc.co.uk/programmes/b006qykl/episodes/downloads.rss)).body
