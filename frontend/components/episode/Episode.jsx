@@ -1,11 +1,11 @@
 import React from 'react';
-import PodcastActions from '../../actions/PodcastActions';
+import PodcastAppActions from '../../actions/PodcastAppActions';
 import { Link } from 'react-router';
 
 const Episode = React.createClass({
   handleClick: function() {
     const mp3Link = this.props.episodeInfo.enclosure.url;
-    PodcastActions.playPodcast(mp3Link);
+    PodcastAppActions.playPodcast(mp3Link, true);
   },
 
   render: function() {
@@ -18,7 +18,6 @@ const Episode = React.createClass({
     const link = 'podcast/' + this.props.podcastId + '/' + window.btoa(this.props.episodeInfo.guid)
 
     return (
-      <Link to={ link }>
       <div onClick={ this.handleClick } className="episode-description">
         <div className="episode-date">
           <p>
@@ -31,7 +30,6 @@ const Episode = React.createClass({
         <span>{ title }</span>
         <span>{ duration }</span>
       </div>
-      </Link>
       );
   }
 });

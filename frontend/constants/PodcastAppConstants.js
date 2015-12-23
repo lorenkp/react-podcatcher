@@ -1,0 +1,3 @@
+module.exports = {
+  UPDATE_PLAYING_STATUS: 'UPDATE_PLAYING_STATUS'
+}

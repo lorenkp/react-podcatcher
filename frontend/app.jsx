@@ -4,6 +4,7 @@ import Search from './components/search/searchBox';
 import PodcastView from './components/podcast/PodcastView';
 import { Link, Router, Route } from 'react-router';
 import EpisodeTable from './components/episode/EpisodeTable';
+import PodcastApp from './components/PodcastApp'
 
 class App extends React.Component {
   render() {
@@ -21,11 +22,12 @@ class App extends React.Component {
 document.addEventListener("DOMContentLoaded", function() {
   ReactDOM.render((
     <Router>
-      <Route path="/" component={ App } />
-      <Route path="/search" component={ Search } />
-      <Route path="/search/:id" component={ PodcastView } />
-      <Route path="/podcasts/:id" component={ PodcastView }>
-        <Route path="episodes" component={ EpisodeTable } />
+      <Route path="/" component={ PodcastApp }>
+        <Route path="/search" component={ Search } />
+        <Route path="/search/:id" component={ PodcastView } />
+        <Route path="/podcasts/:id" component={ PodcastView }>
+          <Route path="episodes" component={ EpisodeTable } />
+        </Route>
       </Route>
     </Router>),
     document.getElementById('root'));

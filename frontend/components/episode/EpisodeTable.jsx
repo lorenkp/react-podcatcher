@@ -12,7 +12,6 @@ function getEpisodes(id) {
 }
 
 const EpisodeTable = React.createClass({
-
   getInitialState: function() {
     return getEpisodes(this.props.params.id)
   },

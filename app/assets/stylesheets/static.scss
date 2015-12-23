@@ -27,6 +27,19 @@ body {
   }
 }
 
+.sidebar {
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  left: 0;
+  top: 0;
+  background-color: lightgray;
+}
+
+.main-window {
+  margin-left: 300px;
+}
+
 .podcast-description {
   height: 200px;
   img {
@@ -47,7 +60,8 @@ body {
 
 .audio-player {
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
+  left: 0;
   height: 100px;
   width: 100%;
   background: gray;
