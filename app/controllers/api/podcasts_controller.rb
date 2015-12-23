@@ -1,4 +1,5 @@
 class Api::PodcastsController < ApplicationController
+  # keys for xml feed
   XML_FIELDS = [
     'title',
     'itunes:author',
@@ -19,20 +20,17 @@ class Api::PodcastsController < ApplicationController
   def show
     query = "https://itunes.apple.com/lookup?id=#{params[:id]}"
     itunes_listing = itunes_query_results(query)[0]
-    feed_url = itunes_listing['feedUrl']
-    raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
-    hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
-    podcast_hash = construct_podcast_hash(hashed_xml)
-    podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
-    podcast_hash[:description][:id] = itunes_listing['collectionId']
-    render json: podcast_hash
+    # feed_url = itunes_listing['feedUrl']
+    # raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
+    # hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
+    # podcast_hash = construct_podcast_hash(hashed_xml)
+    # podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
+    # podcast_hash[:description][:id] = itunes_listing['collectionId']
+    description = hash_podcasts(itunes_listing)
+    render json: description
   end
 
   private
-
-  def decode_utf8_base64(string)
-    URI.unescape(CGI::escape(Base64.decode64(string)))
-  end
 
   def construct_podcast_hash(hashed_xml)
     podcast_hash = {}
@@ -51,12 +49,18 @@ class Api::PodcastsController < ApplicationController
   end
 
   def hash_podcasts(json_results)
-    json_results.map do |podcast|
-      podcast_hash = {}
-      ITUNES_FIELDS.each do |info|
-        podcast_hash[info] = podcast[info]
-      end
-      podcast_hash
+    # binding.pry
+    # json_results.map do |podcast|
+    #   podcast_hash = {}
+    #   ITUNES_FIELDS.each do |info|
+    #     podcast_hash[info] = podcast[info]
+    #   end
+    #   podcast_hash
+    # end
+    info_hash = {}
+    ITUNES_FIELDS.each do |field|
+      info_hash[field] = json_results[field]
     end
+    info_hash
   end
 end

@@ -5,9 +5,5 @@ import ApiUtil from '../util/apiUtil';
 module.exports = {
   fetchSearchResults: function(query) {
     ApiUtil.fetchSearchResults(query);
-  },
-
-  fetchPodcast: function(id) {
-    ApiUtil.fetchPodcast(id)
   }
 };

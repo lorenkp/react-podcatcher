@@ -1,5 +1,4 @@
 import React from 'react';
-import Episode from './Episode';
 
 var PodcastTable = React.createClass({
   render: function() {

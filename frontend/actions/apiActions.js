@@ -1,6 +1,7 @@
 var Dispatcher = require('../dispatcher/dispatcher');
 var SearchResultsConstants = require('../constants/searchResultsConstants');
 var PodcastConstants = require('../constants/PodcastConstants');
+var EpisodeConstants = require('../constants/EpisodeConstants');
 
 module.exports = {
   receiveSearchResults: function(results) {
@@ -14,6 +15,13 @@ module.exports = {
     Dispatcher.dispatch({
       actionType: PodcastConstants.RECEIVED_PODCAST,
       podcast: podcast
+    })
+  },
+
+  receivedEpisodes: function(episodes) {
+    Dispatcher.dispatch({
+      actionType: EpisodeConstants.RECEIVED_EPISODES,
+      episodes: episodes
     })
   }
 };

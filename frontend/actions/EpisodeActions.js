@@ -10,7 +10,7 @@ module.exports = {
     })
   },
 
-  fetchPodcast: function(id) {
-    ApiUtil.fetchPodcast(id)
+  fetchEpisodes: function(id) {
+    ApiUtil.fetchEpisodes(id)
   }
 };

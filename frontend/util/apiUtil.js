@@ -31,6 +31,16 @@ module.exports = {
         ApiActions.receivedPodcast(podcast);
       }
     });
+  },
+
+  fetchEpisodes: function(id) {
+    $.ajax({
+      method: 'GET',
+      url: 'api/podcasts/' + id + '/episodes',
+      success: function(episodes) {
+        ApiActions.receivedEpisodes(episodes);
+      }
+    })
   }
 };
 

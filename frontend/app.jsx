@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Search from './components/search/searchBox';
 import PodcastView from './components/podcast/PodcastView';
 import { Link, Router, Route } from 'react-router';
+import EpisodeTable from './components/episode/EpisodeTable';
 
 class App extends React.Component {
   render() {
@@ -23,10 +24,9 @@ document.addEventListener("DOMContentLoaded", function() {
       <Route path="/" component={ App } />
       <Route path="/search" component={ Search } />
       <Route path="/search/:id" component={ PodcastView } />
+      <Route path="/podcasts/:id" component={ PodcastView }>
+        <Route path="episodes" component={ EpisodeTable } />
+      </Route>
     </Router>),
     document.getElementById('root'));
 });
-
-// Re: PodcastShow -- It's effectively the same view; difference is that search/:id is not 
-// pulling anything from db, because user hasn't necessarily subscribed 
-// yet. podcast/:id uses this, but it's showing a subscribed podcast

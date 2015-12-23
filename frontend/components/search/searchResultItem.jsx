@@ -8,7 +8,7 @@ const SearchResultItem = React.createClass({
     const artworkUrl = podcast.artworkUrl600;
     const artist = podcast.artistName;
     const collectionId = podcast.collectionId;
-    const searchLink = 'search/' + collectionId;
+    const searchLink = 'podcasts/' + collectionId + '/episodes';
 
     return (
       <Link to={ searchLink }>

@@ -2,23 +2,14 @@ import React from 'react';
 
 var PodcastDescription = React.createClass({
   render: function() {
-    const {title, link, image, description} = this.props.description;
-    const author = this.props.description['itunes:author'];
+    const {artistName, collectionName, artworkUrl600} = this.props.description;
     return (
       <div className="podcast-description">
-        <img src={ image }></img>
+        <img src={ artworkUrl600 }></img>
         <div className="podcast-description-text">
-          <h1>{ title }</h1>
+          <h1>{ collectionName }</h1>
           <p>
-            { author }
-          </p>
-          <p>
-            <a href={ link }>
-              { link }
-            </a>
-          </p>
-          <p>
-            { description }
+            { artistName }
           </p>
         </div>
       </div>

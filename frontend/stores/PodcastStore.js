@@ -6,7 +6,7 @@ const PodcastConstants = require('../constants/PodcastConstants');
 let _podcasts = {};
 
 function addPodcast(podcast) {
-  _podcasts[podcast.description.id] = podcast
+  _podcasts[podcast.collectionId] = podcast
 }
 PodcastStore.getPodcast = function(id) {
   return _podcasts[id] || [];
