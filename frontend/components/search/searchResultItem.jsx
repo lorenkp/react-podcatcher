@@ -11,17 +11,19 @@ const SearchResultItem = React.createClass({
     const searchLink = 'podcasts/' + collectionId + '/episodes';
 
     return (
-      <Link to={ searchLink }>
-      <img src={ artworkUrl }></img>
-      <div className="podcast-description">
-        <p className="title">
-          { title }
-        </p>
-        <p className="artist">
-          { artist }
-        </p>
+      <div className="podcast-result">
+        <Link to={ searchLink }>
+        <img src={ artworkUrl }></img>
+        <div>
+          <p className="title">
+            { title }
+          </p>
+          <p className="artist">
+            { artist }
+          </p>
+        </div>
+        </Link>
       </div>
-      </Link>
       );
   }
 

@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
     <Router>
       <Route path="/" component={ PodcastApp }>
         <Route path="/search" component={ Search } />
-        <Route path="/search/:id" component={ PodcastView } />
         <Route path="/podcasts/:id" component={ PodcastView }>
           <Route path="episodes" component={ EpisodeTable } />
         </Route>

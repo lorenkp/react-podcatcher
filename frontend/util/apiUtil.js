@@ -1,18 +1,5 @@
 
 module.exports = {
-  // fetchSearchResults: function(query) {
-  //   $.ajax({
-  //     method: 'GET',
-  //     url: 'api/search',
-  //     data: {
-  //       term: query
-  //     },
-  //     success: function(results) {
-  //       ApiActions.receiveSearchResults(results);
-  //     }
-  //   })
-  // },
-  // searching itunes for the one podcast, bringing back its index
   fetchSearchResults: function(term) {
     $.ajax({
       method: 'GET',
@@ -20,7 +7,7 @@ module.exports = {
       success: function(podcast) {
         ApiActions.receiveSearchResults(podcast);
       }
-    })
+    });
   },
 
   fetchPodcast: function(id) {
@@ -40,7 +27,33 @@ module.exports = {
       success: function(episodes) {
         ApiActions.receivedEpisodes(episodes);
       }
-    })
+    });
+  },
+
+  subscribe: function(podcast) {
+    $.ajax({
+      method: 'POST',
+      url: 'api/subscriptions',
+      data: {
+        subscription: {
+          artist_name: podcast.artistName,
+          collection_name: podcast.collectionName,
+          feed_url: podcast.feedUrl,
+          artwork_url: podcast.artworkUrl600,
+          collection_id: podcast.collectionId
+        }
+
+      },
+      success: function(e) {}
+    });
+  },
+
+  unsubscribe: function(podcast) {
+    $.ajax({
+      method: 'DELETE',
+      url: 'api/subscriptions/' + podcast.collectionId,
+      success: function(e) {}
+    });
   }
 };
 

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'static#main'
   
   namespace :api do
+    resources :subscriptions
     resources :search
     resources :podcasts do
       resources :episodes

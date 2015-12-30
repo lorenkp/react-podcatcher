@@ -2,6 +2,7 @@ var Dispatcher = require('../dispatcher/dispatcher');
 var SearchResultsConstants = require('../constants/searchResultsConstants');
 var PodcastConstants = require('../constants/PodcastConstants');
 var EpisodeConstants = require('../constants/EpisodeConstants');
+import ApiConstants from '../constants/ApiConstants'
 
 module.exports = {
   receiveSearchResults: function(results) {
@@ -23,6 +24,13 @@ module.exports = {
       actionType: EpisodeConstants.RECEIVED_EPISODES,
       episodes: episodes
     })
+  },
+
+  receivedSubConf: function(id) {
+    Dispatcher.dispatch({
+      actionType: ApiConstants.RECEIVED_SUB_CONF,
+      podcast_id: id
+    });
   }
 };
 

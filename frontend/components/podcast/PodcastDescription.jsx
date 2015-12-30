@@ -1,8 +1,22 @@
 import React from 'react';
+import SubscribeButton from './SubscribeButton';
+import SubscribeActions from '../../actions/SubscribeActions';
+
 
 var PodcastDescription = React.createClass({
+
+  toggle: function() {
+    var podcast = this.props.podcast.info
+    if (this.props.podcast.subscribed) {
+      SubscribeActions.unsubscribe(podcast)
+    } else {
+      SubscribeActions.subscribe(podcast)
+    }
+  },
+
+
   render: function() {
-    const {artistName, collectionName, artworkUrl600} = this.props.description;
+    const {artistName, collectionName, artworkUrl600} = this.props.podcast.info;
     return (
       <div className="podcast-description">
         <img src={ artworkUrl600 }></img>
@@ -11,6 +25,7 @@ var PodcastDescription = React.createClass({
           <p>
             { artistName }
           </p>
+          <SubscribeButton onToggle={ this.toggle } subState={ this.props.podcast.subscribed } />
         </div>
       </div>
 

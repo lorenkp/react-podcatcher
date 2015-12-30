@@ -1,7 +1,8 @@
 import React from 'react';
-import Sidebar from './Sidebar'
+import Sidebar from './sidebar/SidebarView'
 import AudioPlayer from './AudioPlayer'
 import PodcastAppStore from '../stores/PodcastAppStore';
+import { Link } from 'react-router';
 
 let listenerToken
 
@@ -41,6 +42,9 @@ const PodcastApp = React.createClass({
         <Sidebar />
         { this.isPlaying() }
         <div className="main-window">
+          <Link to={ 'search' }>
+          { 'Search for Podcasts' }
+          </Link>
           { this.props.children }
         </div>
       </div>

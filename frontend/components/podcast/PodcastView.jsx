@@ -1,15 +1,18 @@
 import React from 'react';
 import PodcastActions from '../../actions/PodcastActions';
 import PodcastStore from '../../stores/PodcastStore'
+import SubscriptionStore from '../../stores/SubscriptionStore'
 import PodcastTable from './PodcastTable';
 import PodcastDescription from './PodcastDescription';
 import AudioPlayer from '../AudioPlayer'
 
-let listenerToken
+let podcastStoreToken;
+let subscriptionStoreToken;
 
 function getPodcast(id) {
   return {
-    listing: PodcastStore.getPodcast(id)
+    info: PodcastStore.getPodcast(id),
+    subscribed: SubscriptionStore.checkSub(id)
   }
 }
 
@@ -19,12 +22,14 @@ var PodcastView = React.createClass({
   },
 
   componentDidMount: function() {
-    listenerToken = PodcastStore.addListener(this._onChange)
+    podcastStoreToken = PodcastStore.addListener(this._onChange)
+    subscriptionStoreToken = SubscriptionStore.addListener(this._onChange)
     PodcastActions.fetchPodcast(this.props.params.id)
   },
 
   componentWillUnmount: function() {
-    listenerToken.remove();
+    podcastStoreToken.remove();
+    subscriptionStoreToken.remove();
   },
 
   _onChange: function() {
@@ -33,16 +38,12 @@ var PodcastView = React.createClass({
 
   render: function() {
 
-    if (Object.keys(this.state.listing).length < 1) {
+    if (Object.keys(this.state.info).length < 1) {
       return null;
     }
-
-    // if (this.state.audioPlayerStatus.podcastPlaying === true) {
-    //   var player = <AudioPlayer mp3Link={ this.state.audioPlayerStatus.mp3Link } />
-    // }
     return (
       <div>
-        <PodcastDescription description={ this.state.listing } />
+        <PodcastDescription podcast={ this.state } />
         <div>
           { this.props.children }
         </div>
