@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchResultStore from '../../stores/searchResult';
+import SearchStore from '../../stores/SearchStore';
 import SearchResultTable from './searchResultTable';
 import SearchInput from './searchInput';
 
@@ -7,7 +7,7 @@ let listenerToken
 
 function getResults() {
   return {
-    results: SearchResultStore.getResults()
+    results: SearchStore.getResults()
   };
 }
 
@@ -18,7 +18,7 @@ var SearchBox = React.createClass({
   },
 
   componentDidMount: function() {
-    listenerToken = SearchResultStore.addListener(this._onChange);
+    listenerToken = SearchStore.addListener(this._onChange);
   },
 
   componentWillUnmount: function() {

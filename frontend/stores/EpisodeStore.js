@@ -11,7 +11,7 @@ function addEpisodes(episodes) {
 }
 
 EpisodeStore.getEpisodes = function(id) {
-  return _episodes[id] || {}
+  return _episodes[id]
 }
 
 EpisodeStore.__onDispatch = function(action) {

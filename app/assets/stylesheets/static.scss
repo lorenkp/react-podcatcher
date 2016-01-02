@@ -2,6 +2,16 @@ body {
   font-family: 'proxima-nova';
   font-weight: 300;
   font-style: normal;
+  font-size: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p {
+  margin: 0;
 }
 
 .search-result-item {
@@ -27,24 +37,53 @@ body {
   }
 }
 
+.search-view {
+  position: fixed;
+  top: 15px;
+  right: 30px;
+}
+
 .sidebar {
   position: fixed;
   height: 100%;
-  width: 300px;
+  width: 325px;
   left: 0;
   top: 0;
   background-color: lightgray;
 }
 
 .main-window {
-  margin-left: 300px;
+  margin-left: 325px;
 }
 
-.podcast-result {
+.podcast-item {
+  cursor: pointer;
+  border-bottom: 1px solid gray;
   img {
-    width: 180px;
-    height: 180px;
+    width: 75px;
+    height: 75px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
   }
+  .podcast-text {
+    margin-left: 10px;
+    display: inline-block;
+    width: 200px;
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.search-result-list {
+  position: fixed;
+  top: 50px;
+  right: 7px;
+  background-color: white;
+  border: 1px solid gray;
+  padding: 15px;
 }
 
 .podcast-description {

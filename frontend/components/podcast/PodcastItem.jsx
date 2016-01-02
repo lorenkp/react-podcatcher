@@ -1,20 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { History } from 'react-router';
+import SearchActions from '../../actions/SearchActions';
 
 const SearchResultItem = React.createClass({
+  mixins: [History],
+
+  goToPodcastIndex: function() {
+    const collectionId = this.props.podcast.collectionId
+    const podcastIndex = 'podcasts/' + collectionId + '/episodes';
+    this.history.push(podcastIndex)
+    SearchActions.resetSearch();
+  },
+
   render: function() {
     const podcast = this.props.podcast
     const title = podcast.collectionName;
     const artworkUrl = podcast.artworkUrl600;
     const artist = podcast.artistName;
-    const collectionId = podcast.collectionId;
-    const searchLink = 'podcasts/' + collectionId + '/episodes';
 
     return (
-      <div className="podcast-result">
-        <Link to={ searchLink }>
+      <div onClick={ this.goToPodcastIndex } className="podcast-item">
         <img src={ artworkUrl }></img>
-        <div>
+        <div className="podcast-text">
           <p className="title">
             { title }
           </p>
@@ -22,7 +30,6 @@ const SearchResultItem = React.createClass({
             { artist }
           </p>
         </div>
-        </Link>
       </div>
       );
   }

@@ -3,7 +3,7 @@ module.exports = {
   fetchSearchResults: function(term) {
     $.ajax({
       method: 'GET',
-      url: 'api/search/' + term,
+      url: 'api/search/' + encodeURIComponent(term),
       success: function(podcast) {
         ApiActions.receiveSearchResults(podcast);
       }
@@ -15,6 +15,7 @@ module.exports = {
       method: 'GET',
       url: 'api/podcasts/' + id,
       success: function(podcast) {
+        debugger
         ApiActions.receivedPodcast(podcast);
       }
     });

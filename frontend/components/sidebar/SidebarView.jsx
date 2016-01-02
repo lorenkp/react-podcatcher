@@ -1,5 +1,6 @@
 import React from 'react';
-import SubscriptionStore from '../../stores/SubscriptionStore'
+import SubscriptionStore from '../../stores/SubscriptionStore';
+import PodcastItem from '../podcast/PodcastItem';
 
 let listenerToken
 
@@ -30,15 +31,11 @@ const Sidebar = React.createClass({
   render: function() {
     return (
       <div className="sidebar">
-        <ul>
-          { this.state.subscriptions.map(function(podcast) {
-              return (
-                <li>
-                  { podcast.collectionName }
-                </li>
-                )
-            }) }
-        </ul>
+        { this.state.subscriptions.map(function(podcast, index) {
+            return (
+              <PodcastItem key={ index } podcast={ podcast } />
+              )
+          }) }
       </div>
       )
   }

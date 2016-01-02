@@ -1,22 +1,21 @@
 var React = require('react');
-var SearchResultItem = require('./searchResultItem');
+var PodcastItem = require('../podcast/PodcastItem');
 
 var SearchResultTable = React.createClass({
 
   render: function() {
-
     if (Object.keys(this.props.results).length < 1) {
       return null;
     }
 
     return (
-      <ul id="search-result-list">
-        { this.props.results.map(function(result, index) {
+      <div className="search-result-list">
+        { this.props.results.map(function(podcast, index) {
             return (
-              <SearchResultItem key={ index } podcast={ result } />
+              <PodcastItem key={ index } podcast={ podcast } />
               );
           }) }
-      </ul>
+      </div>
       );
   }
 });

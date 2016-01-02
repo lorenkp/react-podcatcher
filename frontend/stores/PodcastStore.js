@@ -9,7 +9,7 @@ function addPodcast(podcast) {
   _podcasts[podcast.collectionId] = podcast
 }
 PodcastStore.getPodcast = function(id) {
-  return _podcasts[id] || [];
+  return _podcasts[id];
 }
 
 PodcastStore.__onDispatch = function(action) {

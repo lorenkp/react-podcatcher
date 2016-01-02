@@ -27,6 +27,14 @@ var PodcastView = React.createClass({
     PodcastActions.fetchPodcast(this.props.params.id)
   },
 
+  componentDidUpdate: function(prevProps) {
+    let oldId = prevProps.params.id
+    let newId = this.props.params.id
+    if (newId !== oldId) {
+      this.setState(getPodcast(newId)) || PodcastActions.fetchPodcast(newId)
+    }
+  },
+
   componentWillUnmount: function() {
     podcastStoreToken.remove();
     subscriptionStoreToken.remove();
@@ -38,9 +46,10 @@ var PodcastView = React.createClass({
 
   render: function() {
 
-    if (Object.keys(this.state.info).length < 1) {
-      return null;
+    if (typeof this.state.info === 'undefined') {
+      return null
     }
+
     return (
       <div>
         <PodcastDescription podcast={ this.state } />

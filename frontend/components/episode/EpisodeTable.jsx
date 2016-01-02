@@ -21,6 +21,15 @@ const EpisodeTable = React.createClass({
     EpisodeActions.fetchEpisodes(this.props.params.id)
   },
 
+  componentDidUpdate: function(prevProps) {
+    let oldId = prevProps.params.id
+    let newId = this.props.params.id
+    if (newId !== oldId) {
+      this.setState(getEpisodes(newId)) || EpisodeActions.fetchEpisodes(newId)
+
+    }
+  },
+
   componentWillUnmount: function() {
     listenerToken.remove();
   },
@@ -30,11 +39,13 @@ const EpisodeTable = React.createClass({
   },
 
   render: function() {
+
+    if (typeof this.state.episodes === 'undefined') {
+      return null
+    }
+
     let podcastId = this.props.params.id;
 
-    if (Object.keys(this.state.episodes).length < 1) {
-      return null;
-    }
     return (
       <div>
         { this.state.episodes.map(function(episode, index) {

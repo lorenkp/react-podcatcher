@@ -5,5 +5,11 @@ import ApiUtil from '../util/apiUtil';
 module.exports = {
   fetchSearchResults: function(query) {
     ApiUtil.fetchSearchResults(query);
+  },
+
+  resetSearch: function() {
+    Dispatcher.dispatch({
+      actionType: SearchResultsConstants.RESET_SEARCH
+    })
   }
 };

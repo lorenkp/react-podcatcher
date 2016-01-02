@@ -24,6 +24,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'crack'
 gem 'puma'
+gem 'http'
+gem 'ox'
 
 source 'https://rails-assets.org' do
   # gem 'rails-assets-jquery'

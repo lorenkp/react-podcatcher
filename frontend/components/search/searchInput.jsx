@@ -1,7 +1,8 @@
 import React from 'react';
 import SearchActions from '../../actions/SearchActions';
 
-var ENTER_KEY_CODE = 13;
+let searchDelay
+
 var SearchInput = React.createClass({
 
 
@@ -12,26 +13,22 @@ var SearchInput = React.createClass({
   },
 
   fetchSearchResults: function() {
-    SearchActions.fetchSearchResults(this.state.value);
+    if (this.state.value !== '') {
+      SearchActions.fetchSearchResults(this.state.value);
+    }
   },
 
   handleOnChange: function(event) {
+    searchDelay && clearTimeout(searchDelay);
+    searchDelay = setTimeout(this.fetchSearchResults, 300);
     this.setState({
       value: event.target.value
     })
   },
 
-  handleOnKeyDown: function(event) {
-    if (event.keyCode === ENTER_KEY_CODE) {
-      this.fetchSearchResults();
-    }
-  },
-
   render: function() {
     return (
-      <input onChange={ this.handleOnChange } onKeyDown={ this.handleOnKeyDown } value={ this.state.value }
-      />
-
+      <input onChange={ this.handleOnChange } value={ this.state.value } />
       );
   }
 

@@ -17,6 +17,10 @@ class Api::SearchController < ApplicationController
     'collectionId'
   ]
 
+  def initialize
+    @itunes_connection = HTTP.persistent('https://itunes.apple.com')
+  end
+
   # def index
   #   query = "https://itunes.apple.com/search?entity=podcast&attribute=titleTerm&limit=10&term=#{params[:term]}"
   #   render json: hash_podcasts(itunes_query_results(query))
@@ -31,8 +35,9 @@ class Api::SearchController < ApplicationController
     # podcast_hash = construct_podcast_hash(hashed_xml)
     # podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
     # render json: podcast_hash
-    query = "https://itunes.apple.com/search?entity=podcast&attribute=titleTerm&limit=10&term=#{params[:id]}"
-    result = hash_podcasts(itunes_query_results(query))
+    query = "/search?entity=podcast&attribute=titleTerm&limit=10&term=#{URI.encode(params[:id])}"
+    loren = itunes_query_results(query)
+    result = hash_podcasts(loren)
     render json: result
   end
 
@@ -49,8 +54,7 @@ class Api::SearchController < ApplicationController
   end
 
   def itunes_query_results(query)
-    uri = URI(query)
-    response = Net::HTTP.get(uri)
+    response = @itunes_connection.get(query).to_s
     JSON.parse(response)['results']
   end
 

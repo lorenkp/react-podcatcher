@@ -18,6 +18,12 @@ class Api::PodcastsController < ApplicationController
   ]
 
   def show
+    # podcast = Podcast.find(params[:id])
+    # if podcast
+      
+    #   render json: podcast
+    #   return
+    # end
     query = "https://itunes.apple.com/lookup?id=#{params[:id]}"
     itunes_listing = itunes_query_results(query)[0]
     # feed_url = itunes_listing['feedUrl']
@@ -26,8 +32,8 @@ class Api::PodcastsController < ApplicationController
     # podcast_hash = construct_podcast_hash(hashed_xml)
     # podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
     # podcast_hash[:description][:id] = itunes_listing['collectionId']
-    description = hash_podcasts(itunes_listing)
-    render json: description
+    podcast = hash_podcasts(itunes_listing)
+    render json: podcast
   end
 
   private

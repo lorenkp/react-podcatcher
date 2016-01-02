@@ -11,9 +11,6 @@ class App extends React.Component {
     return (
       <div>
         <h1>{ 'Podcast App' }</h1>
-        <Link to={ 'search' }>
-        { 'Search for Podcasts' }
-        </Link>
       </div>
       );
   }
