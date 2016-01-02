@@ -10,7 +10,7 @@ var SearchResultTable = React.createClass({
 
     return (
       <div className="search-result-list">
-        { this.props.results.map(function(podcast, index) {
+        { this.props.results.search.map(function(podcast, index) {
             return (
               <PodcastItem key={ index } podcast={ podcast } />
               );

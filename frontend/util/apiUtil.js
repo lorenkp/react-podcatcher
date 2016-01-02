@@ -15,7 +15,6 @@ module.exports = {
       method: 'GET',
       url: 'api/podcasts/' + id,
       success: function(podcast) {
-        debugger
         ApiActions.receivedPodcast(podcast);
       }
     });
@@ -41,7 +40,7 @@ module.exports = {
           collection_name: podcast.collectionName,
           feed_url: podcast.feedUrl,
           artwork_url: podcast.artworkUrl600,
-          collection_id: podcast.collectionId
+          podcast_id: podcast.collectionId
         }
 
       },
