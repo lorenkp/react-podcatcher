@@ -2,6 +2,7 @@ var Dispatcher = require('../dispatcher/dispatcher');
 var SearchResultsConstants = require('../constants/searchResultsConstants');
 var PodcastConstants = require('../constants/PodcastConstants');
 var EpisodeConstants = require('../constants/EpisodeConstants');
+var SubscribeConstants = require('../constants/SubscribeConstants');
 import ApiConstants from '../constants/ApiConstants'
 
 module.exports = {
@@ -33,10 +34,12 @@ module.exports = {
     })
   },
 
-  receivedSubConf: function(id) {
+  receivedSubConf: function(sub) {
+    let subscription = {};
+    subscription[sub.podcast.id] = sub.id;
     Dispatcher.dispatch({
-      actionType: ApiConstants.RECEIVED_SUB_CONF,
-      podcast_id: id
+      actionType: SubscribeConstants.ADD_SUBSCRIPTION,
+      subscription: subscription
     });
   }
 };

@@ -1,60 +1,66 @@
 import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
 import SubscribeConstants from '../constants/SubscribeConstants';
+import ApiConstants from '../constants/ApiConstants';
 import PodcastStore from './PodcastStore';
-let SubscribeStore = new Store(Dispatcher);
+let SubscriptionStore = new Store(Dispatcher);
 
-let _subscriptions = []
+let _subscriptions = {}
 
-function addSubscription(podcast_id) {
-  _subscriptions.push(podcast_id);
+function addSubscription(sub) {
+  const podId = Object.keys(sub)[0];
+  _subscriptions[podId] = sub[podId];
 }
 
 function removeSubscription(podcast_id) {
-  let index = _subscriptions.indexOf(podcast_id);
-  _subscriptions.splice(index, 1);
+  delete _subscriptions[podcast_id]
 }
 
 function addInitialSubscriptions(subs) {
   subs.forEach(function(subPod) {
-    _subscriptions.push({
-      subId: subPod.id,
-      podcastId: subPod.podcast.id
-    });
+    _subscriptions[subPod.podcast.id] = subPod.id
   });
 }
 
-SubscribeStore.checkSub = function(id) {
+SubscriptionStore.getSubscription = function(id) {
+  return _subscriptions[id];
+}
+
+SubscriptionStore.checkSub = function(id) {
   var subs = [];
-  _subscriptions.forEach(function(sub) {
-    subs.push(sub.podcastId);
-  });
+  for (var key in _subscriptions) {
+    if (_subscriptions.hasOwnProperty(key)) {
+      subs.push(parseInt(key))
+    }
+  }
   return subs.indexOf(parseInt(id)) !== -1;
 }
 
-SubscribeStore.getSubscriptions = function() {
-  return (
-  _subscriptions.map(function(el) {
-    return PodcastStore.getPodcast(el.podcastId)
-  })
-  )
+SubscriptionStore.getSubscriptions = function() {
+  let podcasts = [];
+  for (var key in _subscriptions) {
+    if (_subscriptions.hasOwnProperty(key)) {
+      podcasts.push(PodcastStore.getPodcast(parseInt(key)))
+    }
+  }
+  return podcasts;
 }
 
-SubscribeStore.__onDispatch = function(action) {
+SubscriptionStore.__onDispatch = function(action) {
   switch (action.actionType) {
     case SubscribeConstants.ADD_SUBSCRIPTION:
-      addSubscription(action.podcast_id);
-      SubscribeStore.__emitChange();
+      addSubscription(action.subscription);
+      SubscriptionStore.__emitChange();
       break;
     case SubscribeConstants.REMOVE_SUBSCRIPTION:
       removeSubscription(action.podcast_id);
-      SubscribeStore.__emitChange();
+      SubscriptionStore.__emitChange();
       break;
-    case SubscribeConstants.RECEIVED_SUBSCRIPTIONS:
+    case ApiConstants.RECEIVED_SUBSCRIPTIONS:
       addInitialSubscriptions(action.subscriptions);
-      SubscribeStore.__emitChange();
+      SubscriptionStore.__emitChange();
       break;
   }
 }
 
-module.exports = SubscribeStore;
+module.exports = SubscriptionStore;

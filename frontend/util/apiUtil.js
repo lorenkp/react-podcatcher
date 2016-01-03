@@ -60,11 +60,10 @@ module.exports = {
     });
   },
 
-  unsubscribe: function(podcast) {
+  unsubscribe: function(id) {
     $.ajax({
       method: 'DELETE',
-      url: 'api/subscriptions/' + podcast.collectionId,
-      success: function(e) {}
+      url: 'api/subscriptions/' + id
     });
   }
 };

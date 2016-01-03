@@ -12,7 +12,7 @@ class Api::SubscriptionsController < ApplicationController
   end
 
   def destroy
-    subscription = Subscription.podcast_id(params[:id]).destroy
+    subscription = Subscription.find(params[:id]).destroy
     render json: subscription
   end
 
