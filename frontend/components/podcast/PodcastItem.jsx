@@ -3,17 +3,21 @@ import { Link } from 'react-router';
 import { History } from 'react-router';
 import SearchActions from '../../actions/SearchActions';
 
-const SearchResultItem = React.createClass({
+const PodcastItem = React.createClass({
   mixins: [History],
 
   goToPodcastIndex: function() {
-    const collectionId = this.props.podcast.collectionId
+    const collectionId = this.props.podcast.collectionId || this.props.podcast.id
     const podcastIndex = 'podcasts/' + collectionId + '/episodes';
     this.history.push(podcastIndex)
     SearchActions.resetSearch();
   },
 
   render: function() {
+    if (typeof this.props.podcast === 'undefined') {
+      return null
+    }
+
     const podcast = this.props.podcast
     const title = podcast.collectionName;
     const artworkUrl = podcast.artworkUrl600;
@@ -36,4 +40,4 @@ const SearchResultItem = React.createClass({
 
 });
 
-module.exports = SearchResultItem;
+module.exports = PodcastItem;

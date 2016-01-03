@@ -15,14 +15,27 @@ function removeSubscription(podcast_id) {
   _subscriptions.splice(index, 1);
 }
 
+function addInitialSubscriptions(subs) {
+  subs.forEach(function(subPod) {
+    _subscriptions.push({
+      subId: subPod.id,
+      podcastId: subPod.podcast.id
+    });
+  });
+}
+
 SubscribeStore.checkSub = function(id) {
-  return _subscriptions.indexOf(parseInt(id)) !== -1;
+  var subs = [];
+  _subscriptions.forEach(function(sub) {
+    subs.push(sub.podcastId);
+  });
+  return subs.indexOf(parseInt(id)) !== -1;
 }
 
 SubscribeStore.getSubscriptions = function() {
   return (
   _subscriptions.map(function(el) {
-    return PodcastStore.getPodcast(el)
+    return PodcastStore.getPodcast(el.podcastId)
   })
   )
 }
@@ -35,6 +48,10 @@ SubscribeStore.__onDispatch = function(action) {
       break;
     case SubscribeConstants.REMOVE_SUBSCRIPTION:
       removeSubscription(action.podcast_id);
+      SubscribeStore.__emitChange();
+      break;
+    case SubscribeConstants.RECEIVED_SUBSCRIPTIONS:
+      addInitialSubscriptions(action.subscriptions);
       SubscribeStore.__emitChange();
       break;
   }

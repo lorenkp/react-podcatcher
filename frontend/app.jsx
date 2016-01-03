@@ -2,19 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/search/searchBox';
 import PodcastView from './components/podcast/PodcastView';
-import { Link, Router, Route } from 'react-router';
+import { Router, Route } from 'react-router';
 import EpisodeTable from './components/episode/EpisodeTable';
 import PodcastApp from './components/PodcastApp'
+import ApiUtil from './util/apiUtil';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{ 'Podcast App' }</h1>
-      </div>
-      );
-  }
-}
+ApiUtil.fetchSubscriptions();
 
 document.addEventListener("DOMContentLoaded", function() {
   ReactDOM.render((

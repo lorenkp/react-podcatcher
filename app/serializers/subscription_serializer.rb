@@ -1,7 +1,4 @@
 class SubscriptionSerializer < ActiveModel::Serializer
-  attributes :id, :podcast
-
-  def podcast
-    object.podcast
-  end
+  attributes :id
+  belongs_to :podcast
 end

@@ -25,8 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'crack'
 gem 'puma'
 gem 'http'
-gem 'active_model_serializers'
-gem 'humps'
+gem "active_model_serializers", github: "rails-api/active_model_serializers"
+gem 'awrence'
 
 source 'https://rails-assets.org' do
   # gem 'rails-assets-jquery'

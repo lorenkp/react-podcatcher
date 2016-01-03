@@ -25,7 +25,7 @@ class Api::SubscriptionsController < ApplicationController
 
   def podcast_params
     params.require(:subscription).permit(:artist_name, :collection_name,
-                                         :feed_url, :artwork_url, :podcast_id)
+                                         :feed_url, :artwork_url_600, :podcast_id)
   end
 
   def subscription_params

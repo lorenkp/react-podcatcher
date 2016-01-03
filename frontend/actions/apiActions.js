@@ -26,6 +26,13 @@ module.exports = {
     })
   },
 
+  receivedSubscriptions: function(subscriptions) {
+    Dispatcher.dispatch({
+      actionType: ApiConstants.RECEIVED_SUBSCRIPTIONS,
+      subscriptions: subscriptions
+    })
+  },
+
   receivedSubConf: function(id) {
     Dispatcher.dispatch({
       actionType: ApiConstants.RECEIVED_SUB_CONF,

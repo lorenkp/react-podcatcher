@@ -30,6 +30,16 @@ module.exports = {
     });
   },
 
+  fetchSubscriptions: function() {
+    $.ajax({
+      method: 'GET',
+      url: 'api/subscriptions',
+      success: function(subscriptions) {
+        ApiActions.receivedSubscriptions(subscriptions)
+      }
+    })
+  },
+
   subscribe: function(podcast) {
     $.ajax({
       method: 'POST',
@@ -39,12 +49,14 @@ module.exports = {
           artist_name: podcast.artistName,
           collection_name: podcast.collectionName,
           feed_url: podcast.feedUrl,
-          artwork_url: podcast.artworkUrl600,
+          artwork_url_600: podcast.artworkUrl600,
           podcast_id: podcast.collectionId
         }
 
       },
-      success: function(e) {}
+      success: function(sub) {
+        ApiActions.receivedSubConf(sub)
+      }
     });
   },
 
