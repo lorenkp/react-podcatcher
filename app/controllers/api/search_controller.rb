@@ -21,23 +21,9 @@ class Api::SearchController < ApplicationController
     @itunes_connection = HTTP.persistent('https://itunes.apple.com')
   end
 
-  # def index
-  #   query = "https://itunes.apple.com/search?entity=podcast&attribute=titleTerm&limit=10&term=#{params[:term]}"
-  #   render json: hash_podcasts(itunes_query_results(query))
-  # end
-
   def show
-    # query = "https://itunes.apple.com/lookup?id=#{params[:term]}"
-    # itunes_listing = itunes_query_results(query)[0]
-    # feed_url = itunes_listing['feedUrl']
-    # raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
-    # hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
-    # podcast_hash = construct_podcast_hash(hashed_xml)
-    # podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
-    # render json: podcast_hash
     query = "/search?entity=podcast&attribute=titleTerm&limit=10&term=#{URI.encode(params[:id])}"
-    loren = itunes_query_results(query)
-    result = hash_podcasts(loren)
+    result = hash_podcasts(itunes_query_results(query))
     render json: result
   end
 

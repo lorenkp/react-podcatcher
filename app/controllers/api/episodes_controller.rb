@@ -25,6 +25,7 @@ class Api::EpisodesController < ApplicationController
     podcast_hash = construct_podcast_hash(hashed_xml)
     podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
     podcast_hash[:description][:id] = itunes_listing['collectionId']
+    binding.pry
     render json: podcast_hash
   end
 
