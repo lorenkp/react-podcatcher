@@ -11,22 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104024148) do
+ActiveRecord::Schema.define(version: 20160104025745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "episode_statuses", force: :cascade do |t|
+    t.integer  "subscription_id", null: false
+    t.integer  "episode_id",      null: false
+    t.boolean  "played",          null: false
+    t.integer  "time_elapsed",    null: false
+    t.boolean  "favorite",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "episode_statuses", ["subscription_id", "episode_id"], name: "index_episode_statuses_on_subscription_id_and_episode_id", unique: true, using: :btree
 
   create_table "episodes", force: :cascade do |t|
     t.string   "title"
     t.string   "duration"
     t.string   "date"
-    t.string   "guid",       null: false
     t.integer  "podcast_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "episodes", ["guid"], name: "index_episodes_on_guid", unique: true, using: :btree
   add_index "episodes", ["podcast_id"], name: "index_episodes_on_podcast_id", using: :btree
 
   create_table "podcasts", force: :cascade do |t|

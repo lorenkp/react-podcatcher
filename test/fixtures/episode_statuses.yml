@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscription_id: 1
+  episode_id: 1
+  played: false
+  time_elapsed: 1
+  favorite: false
+
+two:
+  subscription_id: 1
+  episode_id: 1
+  played: false
+  time_elapsed: 1
+  favorite: false
