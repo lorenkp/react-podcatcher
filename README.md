@@ -1,5 +1,7 @@
 # SPA podcatcher built with Rails API and React/Flux
 
+Work in progress.
+
 - [x] Instant search with drop down results
 - [x] Clicking on podcast search result will reveal the podcast info, along with a list of episodes
 - [x] Player in sticky footer
