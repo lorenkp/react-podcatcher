@@ -1,10 +1,10 @@
 class Api::SubscriptionsController < ApplicationController
   def create
-    unless Podcast.exists?(params[:subscription][:podcast_id])
+    unless Podcast.exists?(params[:subscription][:collection_id])
       Podcast.new(podcast_params).save
     end
 
-    unless Subscription.exists?(podcast_id: params[:subscription][:podcast_id])
+    unless Subscription.exists?(collection_id: params[:subscription][:collection_id])
       subscription = Subscription.new(subscription_params)
       subscription.save
     end
@@ -25,10 +25,10 @@ class Api::SubscriptionsController < ApplicationController
 
   def podcast_params
     params.require(:subscription).permit(:artist_name, :collection_name,
-                                         :feed_url, :artwork_url_600, :podcast_id)
+                                         :feed_url, :artwork_url_600, :collection_id)
   end
 
   def subscription_params
-    params.require(:subscription).permit(:podcast_id)
+    params.require(:subscription).permit(:collection_id)
   end
 end

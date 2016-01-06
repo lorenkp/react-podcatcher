@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104025745) do
+ActiveRecord::Schema.define(version: 20160106070311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,30 +31,34 @@ ActiveRecord::Schema.define(version: 20160104025745) do
   create_table "episodes", force: :cascade do |t|
     t.string   "title"
     t.string   "duration"
-    t.string   "date"
-    t.integer  "podcast_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "pub_date"
+    t.integer  "collection_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "url",           null: false
+    t.string   "description"
+    t.string   "guid"
   end
 
-  add_index "episodes", ["podcast_id"], name: "index_episodes_on_podcast_id", using: :btree
+  add_index "episodes", ["collection_id"], name: "index_episodes_on_collection_id", using: :btree
+  add_index "episodes", ["guid"], name: "index_episodes_on_guid", unique: true, using: :btree
 
   create_table "podcasts", force: :cascade do |t|
     t.string   "artist_name",     null: false
     t.string   "collection_name", null: false
     t.string   "feed_url",        null: false
     t.string   "artwork_url_600", null: false
-    t.integer  "podcast_id",      null: false
+    t.integer  "collection_id",   null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "podcasts", ["podcast_id"], name: "index_podcasts_on_podcast_id", unique: true, using: :btree
+  add_index "podcasts", ["collection_id"], name: "index_podcasts_on_collection_id", unique: true, using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer  "podcast_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "collection_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end

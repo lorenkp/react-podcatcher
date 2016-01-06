@@ -50,7 +50,7 @@ module.exports = {
           collection_name: podcast.collectionName,
           feed_url: podcast.feedUrl,
           artwork_url_600: podcast.artworkUrl600,
-          podcast_id: podcast.collectionId
+          collection_id: podcast.collectionId
         }
 
       },

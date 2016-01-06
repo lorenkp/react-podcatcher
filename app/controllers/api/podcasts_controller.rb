@@ -18,22 +18,18 @@ class Api::PodcastsController < ApplicationController
   ]
 
   def show
-    # podcast = Podcast.find(params[:id])
-    # if podcast
-      
-    #   render json: podcast
-    #   return
-    # end
+    if Podcast.exists?(params[:id])
+      render json: Podcast.find(params[:id]).as_json.to_camelback_keys
+      return
+    end
     query = "https://itunes.apple.com/lookup?id=#{params[:id]}"
     itunes_listing = itunes_query_results(query)[0]
-    # feed_url = itunes_listing['feedUrl']
-    # raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
-    # hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
-    # podcast_hash = construct_podcast_hash(hashed_xml)
-    # podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
-    # podcast_hash[:description][:id] = itunes_listing['collectionId']
     podcast = hash_podcasts(itunes_listing)
     render json: podcast
+    snake_keys_hash = podcast.to_snake_keys
+    artwork_url = snake_keys_hash.delete(:artwork_url600)
+    snake_keys_hash[:artwork_url_600] = artwork_url
+    Podcast.new(snake_keys_hash).save
   end
 
   private
@@ -49,9 +45,7 @@ class Api::PodcastsController < ApplicationController
   end
 
   def itunes_query_results(query)
-    uri = URI(query)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response)['results']
+    JSON.parse(open(query).read)['results']
   end
 
   def hash_podcasts(json_results)

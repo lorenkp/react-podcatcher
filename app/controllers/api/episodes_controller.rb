@@ -1,32 +1,31 @@
 class Api::EpisodesController < ApplicationController
-  XML_FIELDS = [
+  FIELDS = [
     'title',
-    'itunes:author',
-    'link',
-    'description',
-    'guid'
+    'pubDate',
+    'description'
   ]
 
   # keys for itunes JSON response
-  ITUNES_FIELDS = [
-    'artistName',
-    'collectionName',
-    'feedUrl',
-    'artworkUrl600',
-    'collectionId'
-  ]
+  # ITUNES_FIELDS = [
+  #   'artistName',
+  #   'collectionName',
+  #   'feedUrl',
+  #   'artworkUrl600',
+  #   'collectionId'
+  # ]
 
   def index
-    query = "https://itunes.apple.com/lookup?id=#{params[:podcast_id]}"
-    itunes_listing = itunes_query_results(query)[0]
-    feed_url = itunes_listing['feedUrl']
-    raw_xml = Net::HTTP.get_response(URI.parse(feed_url)).body
-    hashed_xml = Crack::XML.parse(raw_xml.to_s)['rss']['channel']
-    podcast_hash = construct_podcast_hash(hashed_xml)
-    podcast_hash[:description][:image] = itunes_listing['artworkUrl600']
-    podcast_hash[:description][:id] = itunes_listing['collectionId']
+    podcast_id = params[:podcast_id]
+    feed_url = Podcast.find(podcast_id).feed_url
+    hashed_xml = Crack::XML.parse(open(feed_url))['rss']['channel']
+    parsed_episodes = parse_episodes(hashed_xml)
+    # for DB saving, changing from JSON camelCase to Rails snake_case
+    snaked_episodes = parsed_episodes.map(&:to_snake_keys)
+    snaked_episodes.each do |episode|
+      Episode.create(episode) unless Episode.find_by_guid(episode[:guid])
+    end
     binding.pry
-    render json: podcast_hash
+    render json: parsed_episodes
   end
 
   def show
@@ -41,7 +40,7 @@ class Api::EpisodesController < ApplicationController
     podcast_hash
   end
 
-  def encode_utf8_base64(episode)
+  def create_guid(episode)
     Base64.encode64(episode).delete("\n", '')
   end
 
@@ -49,20 +48,24 @@ class Api::EpisodesController < ApplicationController
     URI.unescape(CGI::escape(Base64.decode64(string)))
   end
 
-  def construct_podcast_hash(hashed_xml)
-    podcast_hash = {}
-    podcast_hash[:description] = {}
-    XML_FIELDS.each do |field|
-      podcast_hash[:description][field] = hashed_xml[field]
+  def parse_episodes(hashed_xml)
+    raw_episodes = hashed_xml['item']
+    episodes = []
+    raw_episodes.each do |episode|
+      hash = {}
+      FIELDS.each do |field|
+        hash[field] = episode[field]
+      end
+      hash[:url] = episode['enclosure']['url']
+      hash[:collection_id] = params[:podcast_id]
+      hash[:guid] = create_guid(episode['guid'])
+      episodes << hash
     end
-    podcast_hash[:episodes] = hashed_xml['item']
-    episode_id(podcast_hash)
+    episodes
   end
 
   def itunes_query_results(query)
-    uri = URI(query)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response)['results']
+    JSON.parse(open(query).read)['results']
   end
 
   def hash_podcasts(json_results)
