@@ -20,10 +20,13 @@ module.exports = {
     });
   },
 
-  fetchEpisodes: function(id) {
+  fetchEpisodes: function(collectionId, feedUrl) {
     $.ajax({
       method: 'GET',
-      url: 'api/podcasts/' + id + '/episodes',
+      url: 'api/podcasts/' + collectionId + '/episodes',
+      data: {
+        feedUrl: feedUrl
+      },
       success: function(episodes) {
         ApiActions.receivedEpisodes(episodes);
       }

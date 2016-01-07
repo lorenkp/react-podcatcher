@@ -7,10 +7,10 @@ module.exports = {
     Dispatcher.dispatch({
       actionType: PodcastConstants.PLAY_PODCAST,
       mp3Link: mp3Link
-    })
+    });
   },
 
-  fetchEpisodes: function(id) {
-    ApiUtil.fetchEpisodes(id)
+  fetchEpisodes: function(collectionId, feedUrl) {
+    ApiUtil.fetchEpisodes(collectionId, feedUrl);
   }
 };

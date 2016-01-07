@@ -5,10 +5,10 @@ class Api::SubscriptionsController < ApplicationController
     end
 
     unless Subscription.exists?(collection_id: params[:subscription][:collection_id])
-      subscription = Subscription.new(subscription_params)
-      subscription.save
+      @subscription = Subscription.create(subscription_params)
     end
-    render json: subscription
+    create_episode_statuses
+    render json: @subscription
   end
 
   def destroy
@@ -22,6 +22,13 @@ class Api::SubscriptionsController < ApplicationController
   end
 
   private
+
+  def create_episode_statuses
+    episodes = Episode.where(collection_id: params[:subscription][:collection_id])
+    episodes.each do |episode|
+      episode.episode_statuses.create(subscription_id: @subscription.id)
+    end
+  end
 
   def podcast_params
     params.require(:subscription).permit(:artist_name, :collection_name,

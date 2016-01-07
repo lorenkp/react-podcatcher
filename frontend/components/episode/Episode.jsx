@@ -4,14 +4,14 @@ import { Link } from 'react-router';
 
 const Episode = React.createClass({
   handleClick: function() {
-    const mp3Link = this.props.episodeInfo.enclosure.url;
+    const mp3Link = this.props.episodeInfo.url;
     PodcastAppActions.playPodcast(mp3Link, true);
   },
 
   render: function() {
     const episodeInfo = this.props.episodeInfo;
-    const {title, pubDate, description, enclosure} = episodeInfo;
-    const duration = episodeInfo['itunes:duration']
+    const {title, pubDate, description} = episodeInfo;
+    // const duration = episodeInfo['itunes:duration']
     const splitDate = pubDate.split(' ');
     const day = splitDate[1];
     const month = splitDate[2];
@@ -28,7 +28,6 @@ const Episode = React.createClass({
           </p>
         </div>
         <span>{ title }</span>
-        <span>{ duration }</span>
       </div>
       );
   }

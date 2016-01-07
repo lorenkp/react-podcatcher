@@ -9,14 +9,15 @@ const PodcastItem = React.createClass({
   goToPodcastIndex: function() {
     const collectionId = this.props.podcast.collectionId || this.props.podcast.id
     const podcastIndex = 'podcasts/' + collectionId + '/episodes';
-    this.history.push(podcastIndex)
     SearchActions.resetSearch();
+    this.history.push(podcastIndex + '?feedUrl=' + this.props.podcast.feedUrl)
   },
 
   render: function() {
     if (typeof this.props.podcast === 'undefined') {
       return null
     }
+    const collectionId = this.props.podcast.collectionId || this.props.podcast.id
 
     const podcast = this.props.podcast
     const title = podcast.collectionName;
@@ -35,6 +36,7 @@ const PodcastItem = React.createClass({
           </p>
         </div>
       </div>
+
       );
   }
 

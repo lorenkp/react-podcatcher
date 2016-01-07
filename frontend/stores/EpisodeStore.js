@@ -7,7 +7,8 @@ const EpisodeConstants = require('../constants/EpisodeConstants');
 let _episodes = {};
 
 function addEpisodes(episodes) {
-  _episodes[episodes.description.id] = episodes.episodes
+  const podId = Object.keys(episodes);
+  _episodes[podId] = episodes[parseInt(podId)];
 }
 
 EpisodeStore.getEpisodes = function(id) {

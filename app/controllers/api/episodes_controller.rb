@@ -15,17 +15,16 @@ class Api::EpisodesController < ApplicationController
   # ]
 
   def index
-    podcast_id = params[:podcast_id]
-    feed_url = Podcast.find(podcast_id).feed_url
-    hashed_xml = Crack::XML.parse(open(feed_url))['rss']['channel']
+    hashed_xml = Crack::XML.parse(open(params[:feedUrl]).read)['rss']['channel']
     parsed_episodes = parse_episodes(hashed_xml)
+    to_render = {}
+    to_render[params[:podcast_id]] = parsed_episodes
     # for DB saving, changing from JSON camelCase to Rails snake_case
     snaked_episodes = parsed_episodes.map(&:to_snake_keys)
     snaked_episodes.each do |episode|
       Episode.create(episode) unless Episode.find_by_guid(episode[:guid])
     end
-    binding.pry
-    render json: parsed_episodes
+    render json: to_render
   end
 
   def show
