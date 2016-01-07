@@ -1,9 +1,11 @@
 import React from 'react';
 import EpisodeStore from '../../stores/EpisodeStore'
+import SubscriptionStore from '../../stores/SubscriptionStore'
 import EpisodeActions from '../../actions/EpisodeActions';
 import Episode from './Episode';
 
-let listenerToken
+let episodeListenerToken
+// let subscriptionListenerToken
 
 function getEpisodes(id) {
   return {
@@ -17,7 +19,8 @@ const EpisodeTable = React.createClass({
   },
 
   componentDidMount: function() {
-    listenerToken = EpisodeStore.addListener(this._onChange)
+    episodeListenerToken = EpisodeStore.addListener(this._onChange);
+    // subscriptionListenerToken = SubscriptionStore.addListener(this._onChange);
     const collectionId = this.props.params.id;
     const feedUrl = this.props.location.query.feedUrl;
     EpisodeActions.fetchEpisodes(collectionId, feedUrl);
@@ -34,7 +37,8 @@ const EpisodeTable = React.createClass({
   },
 
   componentWillUnmount: function() {
-    listenerToken.remove();
+    episodeListenerToken.remove();
+  // subscriptionListenerToken.remove();
   },
 
   _onChange: function() {

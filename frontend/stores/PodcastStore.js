@@ -12,7 +12,7 @@ function addPodcast(podcast) {
 
 function addInitialSubs(subs) {
   subs.forEach(function(subPodcast) {
-    _podcasts[subPodcast.podcast.id] = subPodcast.podcast
+    _podcasts[subPodcast.podcast.collectionId] = subPodcast.podcast
   });
 }
 

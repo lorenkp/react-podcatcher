@@ -15,8 +15,8 @@ module.exports = {
     ApiUtil.subscribe(podcast);
   },
   unsubscribe: function(podcast) {
-    const podcastId = podcast.collectionId || podcast.id
-    let subId = SubscriptionStore.getSubscription(podcastId);
+    const podcastId = podcast.collectionId
+    let subId = SubscriptionStore.getSubscriptionId(podcastId);
     Dispatcher.dispatch({
       actionType: SubscribeConstants.REMOVE_SUBSCRIPTION,
       podcast_id: podcastId

@@ -24,7 +24,6 @@ class Api::EpisodesController < ApplicationController
     snaked_episodes.each do |episode|
       Episode.create(episode) unless Episode.find_by_guid(episode[:guid])
     end
-
     render json: Episode.where(collection_id: params[:podcast_id])
   end
 

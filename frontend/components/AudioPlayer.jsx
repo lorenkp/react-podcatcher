@@ -1,11 +1,17 @@
 import React from 'react';
 
-export default class AudioPlayer extends React.Component {
-  render() {
+const AudioPlayer = React.createClass({
+  componentDidMount: function() {
+    const audioPlayer = document.getElementById('player')
+  },
+
+  render: function() {
     return (
       <div className="audio-player">
-        <audio controls autoPlay src={ this.props.mp3Link } />
+        <audio id="player" controls autoPlay src={ this.props.mp3Link } />
       </div>
       );
   }
-}
+});
+
+module.exports = AudioPlayer;

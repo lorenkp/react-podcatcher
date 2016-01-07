@@ -15,6 +15,13 @@ const Episode = React.createClass({
     })
   },
 
+  played: function() {
+    const subscription = this.props.episodeInfo.subscription[0];
+    if (typeof this.props.episodeInfo.subscription[0] !== 'undefined' && subscription.played === false) {
+      return 'Unplayed'
+    }
+  },
+
   render: function() {
     const episodeInfo = this.props.episodeInfo;
     const {title, pubDate, description} = episodeInfo;
@@ -35,7 +42,7 @@ const Episode = React.createClass({
           </p>
         </div>
         <span>{ title }</span>
-        { episodeInfo.subscription[0].played ? null : 'Unplayed' }
+        { this.played() }
       </div>
       );
   }

@@ -1,19 +1,19 @@
 class Api::SubscriptionsController < ApplicationController
   def create
     unless Podcast.exists?(params[:subscription][:collection_id])
-      Podcast.new(podcast_params).save
+      Podcast.create(podcast_params)
     end
 
     unless Subscription.exists?(collection_id: params[:subscription][:collection_id])
       @subscription = Subscription.create(subscription_params)
     end
     create_episode_statuses
-    render json: @subscription
+    render json: @subscription, include: :podcast
   end
 
   def destroy
     subscription = Subscription.find(params[:id]).destroy
-    render json: subscription
+    render json: subscription, include: :podcast
   end
 
   def index

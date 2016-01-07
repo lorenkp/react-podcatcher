@@ -7,7 +7,7 @@ const PodcastItem = React.createClass({
   mixins: [History],
 
   goToPodcastIndex: function() {
-    const collectionId = this.props.podcast.collectionId || this.props.podcast.id
+    const collectionId = this.props.podcast.collectionId
     const podcastIndex = 'podcasts/' + collectionId + '/episodes';
     SearchActions.resetSearch();
     this.history.push(podcastIndex + '?feedUrl=' + this.props.podcast.feedUrl)
@@ -17,7 +17,7 @@ const PodcastItem = React.createClass({
     if (typeof this.props.podcast === 'undefined') {
       return null
     }
-    const collectionId = this.props.podcast.collectionId || this.props.podcast.id
+    const collectionId = this.props.podcast.collectionId
 
     const podcast = this.props.podcast
     const title = podcast.collectionName;

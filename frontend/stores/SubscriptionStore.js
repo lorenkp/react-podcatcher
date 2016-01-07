@@ -18,11 +18,11 @@ function removeSubscription(podcast_id) {
 
 function addInitialSubscriptions(subs) {
   subs.forEach(function(subPod) {
-    _subscriptions[subPod.podcast.id] = subPod.id
+    _subscriptions[subPod.podcast.collectionId] = subPod.id
   });
 }
 
-SubscriptionStore.getSubscription = function(id) {
+SubscriptionStore.getSubscriptionId = function(id) {
   return _subscriptions[id];
 }
 

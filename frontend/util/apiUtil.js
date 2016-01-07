@@ -38,6 +38,7 @@ module.exports = {
       url: 'api/subscriptions',
       success: function(subscriptions) {
         ApiActions.receivedSubscriptions(subscriptions)
+
       }
     })
   },
@@ -58,14 +59,18 @@ module.exports = {
       },
       success: function(sub) {
         ApiActions.receivedSubConf(sub)
-      }
+        this.fetchEpisodes(sub.podcast.collectionId, sub.podcast.feedUrl)
+      }.bind(this)
     });
   },
 
   unsubscribe: function(id) {
     $.ajax({
       method: 'DELETE',
-      url: 'api/subscriptions/' + id
+      url: 'api/subscriptions/' + id,
+      success: function(sub) {
+        this.fetchEpisodes(sub.podcast.collectionId, sub.podcast.feedUrl)
+      }.bind(this)
     });
   },
 

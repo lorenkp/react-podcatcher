@@ -6,6 +6,11 @@ var SubscribeConstants = require('../constants/SubscribeConstants');
 import ApiConstants from '../constants/ApiConstants'
 
 module.exports = {
+
+  fetchEpisodes: function(collectionId, feedUrl) {
+    ApiUtil.fetchEpisodes(collectionId, feedUrl);
+  },
+
   receiveSearchResults: function(results) {
     Dispatcher.dispatch({
       actionType: SearchResultsConstants.SEARCH_RESULTS_RECEIVED,
@@ -36,7 +41,7 @@ module.exports = {
 
   receivedSubConf: function(sub) {
     let subscription = {};
-    subscription[sub.podcast.id] = sub.id;
+    subscription[sub.podcast.collectionId] = sub.id;
     Dispatcher.dispatch({
       actionType: SubscribeConstants.ADD_SUBSCRIPTION,
       subscription: subscription
