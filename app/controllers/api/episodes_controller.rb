@@ -15,16 +15,17 @@ class Api::EpisodesController < ApplicationController
   # ]
 
   def index
-    hashed_xml = Crack::XML.parse(open(params[:feedUrl]).read)['rss']['channel']
+    query = "https://itunes.apple.com/lookup?id=#{params[:podcast_id]}"
+    feed_url = params[:feedUrl] || itunes_query_results(query)[0]['feedUrl']
+    hashed_xml = Crack::XML.parse(open(feed_url).read)['rss']['channel']
     parsed_episodes = parse_episodes(hashed_xml)
-    to_render = {}
-    to_render[params[:podcast_id]] = parsed_episodes
     # for DB saving, changing from JSON camelCase to Rails snake_case
     snaked_episodes = parsed_episodes.map(&:to_snake_keys)
     snaked_episodes.each do |episode|
       Episode.create(episode) unless Episode.find_by_guid(episode[:guid])
     end
-    render json: to_render
+
+    render json: Episode.where(collection_id: params[:podcast_id])
   end
 
   def show

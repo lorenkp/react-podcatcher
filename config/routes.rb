@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  # get 'static/main'
-
   root 'static#main'
-  
+
   namespace :api do
     resources :subscriptions
+    resources :episode_statuses, only: [:update]
     resources :search
     resources :podcasts do
       resources :episodes

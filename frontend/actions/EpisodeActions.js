@@ -1,5 +1,6 @@
 import Dispatcher from '../dispatcher/dispatcher';
 import PodcastConstants from '../constants/PodcastConstants';
+import EpisodeConstants from '../constants/EpisodeConstants';
 import ApiUtil from '../util/apiUtil';
 
 module.exports = {
@@ -12,5 +13,13 @@ module.exports = {
 
   fetchEpisodes: function(collectionId, feedUrl) {
     ApiUtil.fetchEpisodes(collectionId, feedUrl);
+  },
+
+  updateEpisodeStatus: function(status) {
+    Dispatcher.dispatch({
+      actionType: EpisodeConstants.UPDATE_STATUS,
+      status: status
+    })
+    ApiUtil.updateEpisodeStatus(status)
   }
 };

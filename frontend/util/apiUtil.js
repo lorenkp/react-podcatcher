@@ -1,4 +1,3 @@
-
 module.exports = {
   fetchSearchResults: function(term) {
     $.ajax({
@@ -68,6 +67,16 @@ module.exports = {
       method: 'DELETE',
       url: 'api/subscriptions/' + id
     });
+  },
+
+  updateEpisodeStatus: function(status) {
+    $.ajax({
+      method: 'PATCH',
+      url: 'api/episode_statuses/' + status.id,
+      data: {
+        status
+      }
+    })
   }
 };
 

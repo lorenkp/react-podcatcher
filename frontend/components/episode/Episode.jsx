@@ -1,11 +1,18 @@
 import React from 'react';
 import PodcastAppActions from '../../actions/PodcastAppActions';
+import EpisodeActions from '../../actions/EpisodeActions';
 import { Link } from 'react-router';
 
 const Episode = React.createClass({
   handleClick: function() {
     const mp3Link = this.props.episodeInfo.url;
     PodcastAppActions.playPodcast(mp3Link, true);
+    EpisodeActions.updateEpisodeStatus({
+      played: true,
+      id: this.props.episodeInfo.subscription[0].id,
+      collectionId: this.props.episodeInfo.collectionId,
+      guid: this.props.episodeInfo.guid
+    })
   },
 
   render: function() {
@@ -28,6 +35,7 @@ const Episode = React.createClass({
           </p>
         </div>
         <span>{ title }</span>
+        { episodeInfo.subscription[0].played ? null : 'Unplayed' }
       </div>
       );
   }
