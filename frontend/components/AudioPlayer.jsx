@@ -1,8 +1,24 @@
 import React from 'react';
+import EpisodeActions from '../actions/EpisodeActions';
+
+function getPlayingState() {
+}
 
 const AudioPlayer = React.createClass({
+
+// getInitialState: function() {
+//   return getPlayingState();
+// },
+
   componentDidMount: function() {
-    const audioPlayer = document.getElementById('player')
+    let $player = $('#player');
+    $player.on('play', function() {
+      setInterval(function() {
+        if (!$player.paused) {
+          EpisodeActions
+        }
+      });
+    })
   },
 
   render: function() {

@@ -20,6 +20,7 @@ const PodcastApp = React.createClass({
 
   componentDidMount: function() {
     listenerToken = PodcastAppStore.addListener(this._onChange)
+    let status = this.state.playingState;
   },
 
   componentWillUnmount: function() {
@@ -30,19 +31,24 @@ const PodcastApp = React.createClass({
     this.setState(getAppState());
   },
 
-  isPlaying: function() {
-    let status = this.state.playingState;
-    if (status.playing === true) {
-      return <AudioPlayer mp3Link={ status.mp3Link } />
-    }
-  },
+  // isPlaying: function() {
+  //   let status = this.state.playingState;
+  //   if (status.playing === true) {
+  //     return <AudioPlayer mp3Link={ status.mp3Link } />
+  //   }
+  // },
 
   render: function() {
+
+    if (status.playing === true) {
+      $('.audio-player').css('display', 'block')
+    }
+
     return (
       <div>
         <Sidebar />
         <SearchView />
-        { this.isPlaying() }
+        <AudioPlayer mp3Link={ status.mp3Link } />
         <div className="main-window">
           { this.props.children }
         </div>

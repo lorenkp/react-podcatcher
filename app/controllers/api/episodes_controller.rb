@@ -1,9 +1,8 @@
 class Api::EpisodesController < ApplicationController
-  FIELDS = [
-    'title',
-    'pubDate',
-    'description'
-  ]
+  FIELDS = %w(
+    title
+    pubDate
+    description)
 
   # keys for itunes JSON response
   # ITUNES_FIELDS = [
@@ -44,7 +43,7 @@ class Api::EpisodesController < ApplicationController
   end
 
   def decode_utf8_base64(string)
-    URI.unescape(CGI::escape(Base64.decode64(string)))
+    URI.unescape(CGI.escape(Base64.decode64(string)))
   end
 
   def parse_episodes(hashed_xml)

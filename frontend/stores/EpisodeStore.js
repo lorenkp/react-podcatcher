@@ -2,6 +2,7 @@ import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
 let EpisodeStore = new Store(Dispatcher);
 const EpisodeConstants = require('../constants/EpisodeConstants');
+const ApiConstants = require('../constants/ApiConstants');
 const SubscribeConstants = require('../constants/SubscribeConstants');
 
 
@@ -10,6 +11,13 @@ let _episodes = {};
 function addEpisodes(episodes) {
   const podId = episodes[0].collectionId;
   _episodes[podId] = episodes;
+}
+
+function addInitialSubEpisodes(subscription) {
+  subscription.forEach(function(podcast) {
+    _episodes[podcast.podcast.collectionId] = podcast.episodes
+  })
+  debugger
 }
 
 function addSubscription(podcast) {
@@ -44,7 +52,12 @@ EpisodeStore.__onDispatch = function(action) {
       break;
     case SubscribeConstants.ADD_SUBSCRIPTION:
       addSubscription(action.subscription);
-      EpisodeStore.__emitChange;
+      EpisodeStore.__emitChange();
+      break;
+    case ApiConstants.RECEIVED_SUBSCRIPTIONS:
+      addInitialSubEpisodes(action.subscriptions);
+      EpisodeStore.__emitChange();
+      break;
   }
 };
 

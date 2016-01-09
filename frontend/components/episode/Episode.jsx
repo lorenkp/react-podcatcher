@@ -1,18 +1,15 @@
 import React from 'react';
 import PodcastAppActions from '../../actions/PodcastAppActions';
 import EpisodeActions from '../../actions/EpisodeActions';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 const Episode = React.createClass({
   handleClick: function() {
     const mp3Link = this.props.episodeInfo.url;
     PodcastAppActions.playPodcast(mp3Link, true);
-    EpisodeActions.updateEpisodeStatus({
-      played: true,
-      id: this.props.episodeInfo.subscription[0].id,
-      collectionId: this.props.episodeInfo.collectionId,
-      guid: this.props.episodeInfo.guid
-    })
+    if (this.props.episodeInfo.subscription[0]) {
+      EpisodeActions.updateEpisodeStatus({played: true, id: this.props.episodeInfo.subscription[0].id, collectionId: this.props.episodeInfo.collectionId, guid: this.props.episodeInfo.guid});
+    }
   },
 
   played: function() {
@@ -32,19 +29,19 @@ const Episode = React.createClass({
     const link = 'podcast/' + this.props.podcastId + '/' + window.btoa(this.props.episodeInfo.guid)
 
     return (
-      <div onClick={ this.handleClick } className="episode-description">
+      <div onClick={this.handleClick} className="episode-description">
         <div className="episode-date">
           <p>
-            { month }
+            {month}
           </p>
           <p>
-            { day }
+            {day}
           </p>
         </div>
-        <span>{ title }</span>
-        { this.played() }
+        <span>{title}</span>
+        {this.played()}
       </div>
-      );
+    );
   }
 });
 
