@@ -1,20 +1,32 @@
 import React from 'react';
-import PodcastAppActions from '../../actions/PodcastAppActions';
+import AudioPlayerActions from '../../actions/AudioPlayerActions';
 import EpisodeActions from '../../actions/EpisodeActions';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 const Episode = React.createClass({
-  handleClick: function() {
+  handlePlay: function() {
     const mp3Link = this.props.episodeInfo.url;
-    PodcastAppActions.playPodcast(mp3Link, true);
-    if (this.props.episodeInfo.subscription[0]) {
-      EpisodeActions.updateEpisodeStatus({played: true, id: this.props.episodeInfo.subscription[0].id, collectionId: this.props.episodeInfo.collectionId, guid: this.props.episodeInfo.guid});
+    if (this.props.episodeInfo.subscription) {
+      AudioPlayerActions.playSubPodcast({
+        played: true,
+        isSub: true,
+        id: this.props.episodeInfo.subscription.id,
+        collectionId: this.props.episodeInfo.collectionId,
+        epiGUID: this.props.episodeInfo.guid,
+        mp3Link: mp3Link,
+        playing: true
+      });
+    } else {
+      AudioPlayerActions.playNoSubPodcast({
+        mp3Link: mp3Link,
+        playing: true
+      });
     }
   },
 
   played: function() {
-    const subscription = this.props.episodeInfo.subscription[0];
-    if (typeof this.props.episodeInfo.subscription[0] !== 'undefined' && subscription.played === false) {
+    const subscription = this.props.episodeInfo.subscription
+    if (subscription && subscription.played === false) {
       return 'Unplayed'
     }
   },
@@ -29,19 +41,19 @@ const Episode = React.createClass({
     const link = 'podcast/' + this.props.podcastId + '/' + window.btoa(this.props.episodeInfo.guid)
 
     return (
-      <div onClick={this.handleClick} className="episode-description">
+      <div onClick={ this.handlePlay } className="episode-description">
         <div className="episode-date">
           <p>
-            {month}
+            { month }
           </p>
           <p>
-            {day}
+            { day }
           </p>
         </div>
-        <span>{title}</span>
-        {this.played()}
+        <span>{ title }</span>
+        { this.played() }
       </div>
-    );
+      );
   }
 });
 

@@ -1,11 +1,13 @@
 class Api::EpisodeStatusesController < ApplicationController
   def update
-    test = EpisodeStatus.update(params[:id], episode_status_params)
+    updated_status = EpisodeStatus.find(params[:id])
+                     .update(episode_status_params)
+    render json: updated_status
   end
 
   private
 
   def episode_status_params
-    params.require(:status).permit(:id, :played, :time_elapsed, :favorite)
+    params.require(:status).permit(:played, :time_elapsed, :favorite)
   end
 end

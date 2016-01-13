@@ -79,7 +79,12 @@ module.exports = {
       method: 'PATCH',
       url: 'api/episode_statuses/' + status.id,
       data: {
-        status
+        status: {
+          id: status.id,
+          played: status.played,
+          favorite: status.favorite,
+          time_elapsed: status.timeElapsed
+        }
       }
     })
   }

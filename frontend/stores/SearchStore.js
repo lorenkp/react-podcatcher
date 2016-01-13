@@ -56,10 +56,7 @@ SearchResultsStore.__onDispatch = function(action) {
       addListing(action.podcast);
       SearchResultsStore.__emitChange();
       break;
-    case SearchResultsConstants.PLAY_PODCAST:
-      updateAudioPlayer(true, action.mp3Link);
-      SearchResultsStore.__emitChange();
-      break;
+
     case SearchResultsConstants.RESET_SEARCH:
       resetSearch()
       SearchResultsStore.__emitChange();
@@ -67,5 +64,9 @@ SearchResultsStore.__onDispatch = function(action) {
   }
 };
 
+// case SearchResultsConstants.PLAY_PODCAST:
+//   updateAudioPlayer(true, action.mp3Link);
+//   SearchResultsStore.__emitChange();
+//   break;
 
 module.exports = SearchResultsStore;
