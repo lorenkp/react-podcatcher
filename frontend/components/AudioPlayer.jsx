@@ -7,7 +7,7 @@ import EpisodeActions from '../actions/EpisodeActions'
 let audioPlayerListenerToken;
 let episodeStatusListenerToken;
 
-let SECONDS_INCREASE = 10;
+const SAVE_INTERVAL = 10;
 
 function getPlayingStatus() {
   return AudioPlayerStore.getPlayingStatus()
@@ -62,7 +62,7 @@ const AudioPlayer = React.createClass({
   startSavingInterval: function() {
     this.savingInterval = setInterval(function() {
       this.saveStatus()
-    }.bind(this), SECONDS_INCREASE * 1000);
+    }.bind(this), SAVE_INTERVAL * 1000);
   },
 
   saveStatus: function() {

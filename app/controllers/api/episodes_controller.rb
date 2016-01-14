@@ -2,7 +2,7 @@ class Api::EpisodesController < ApplicationController
   FIELDS = %w(
     title
     pubDate
-    description)
+  description)
 
   # keys for itunes JSON response
   # ITUNES_FIELDS = [
@@ -21,7 +21,7 @@ class Api::EpisodesController < ApplicationController
     # for DB saving, changing from JSON camelCase to Rails snake_case
     snaked_episodes = parsed_episodes.map(&:to_snake_keys)
     snaked_episodes.each do |episode|
-      Episode.create(episode) unless Episode.find_by_guid(episode[:guid])
+      new_episode_with_status(episode) unless Episode.find_by_guid(episode[:guid])
     end
     render json: Episode.where(collection_id: params[:podcast_id])
   end
@@ -46,20 +46,35 @@ class Api::EpisodesController < ApplicationController
     URI.unescape(CGI.escape(Base64.decode64(string)))
   end
 
+  def new_episode_with_status(episode)
+    new_episode = Episode.create(episode)
+    subscription_id = Subscription.where(collection_id: new_episode.collection_id)
+    new_episode.episode_statuses.create(subscription_id: subscription_id)
+  end
+
   def parse_episodes(hashed_xml)
     raw_episodes = hashed_xml['item']
     episodes = []
-    raw_episodes.each do |episode|
-      hash = {}
-      FIELDS.each do |field|
-        hash[field] = episode[field]
-      end
-      hash[:url] = episode['enclosure']['url']
-      hash[:collection_id] = params[:podcast_id]
-      hash[:guid] = create_guid(episode['guid'])
-      episodes << hash
+    if raw_episodes.is_a?(Array)
+      raw_episodes.each { |episode| episodes << assemble_episode_hash(episode) }
+    else
+      episodes << assemble_episode_hash(raw_episodes)
     end
     episodes
+  end
+
+  def assemble_episode_hash(episode)
+    hash = {}
+    FIELDS.each do |field|
+      hash[field] = episode[field]
+    end
+    begin
+      hash[:url] = episode['enclosure']['url']
+    rescue
+    end
+    hash[:collection_id] = params[:podcast_id]
+    hash[:guid] = create_guid(episode['guid'])
+    hash
   end
 
   def itunes_query_results(query)

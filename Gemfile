@@ -52,6 +52,10 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-byebug'
   gem 'rubocop'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
 end
 
 group :development do

@@ -17,6 +17,14 @@ function addEpisodes(episodes) {
 function addInitialSubEpisodes(subscription) {
   subscription.forEach(function(podcast) {
     _episodes[podcast.podcast.collectionId] = podcast.episodes
+  });
+}
+
+function sortByDate() {
+  Object.keys(_episodes).forEach(function(podId) {
+    _episodes[podId].sort(function(a, b) {
+      return new Date(b.pubDate) - new Date(a.pubDate);
+    });
   })
 }
 
@@ -46,6 +54,7 @@ function findEpisode(podcastId, epiGUID) {
 
 
 EpisodeStore.getEpisodes = function(id) {
+  sortByDate();
   return _episodes[id]
 }
 
