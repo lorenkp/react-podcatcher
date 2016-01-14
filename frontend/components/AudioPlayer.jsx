@@ -2,6 +2,7 @@ import React from 'react';
 import AudioPlayerActions from '../actions/AudioPlayerActions';
 import AudioPlayerStore from '../stores/AudioPlayerStore'
 import EpisodeStatusStore from '../stores/EpisodeStatusStore'
+import EpisodeActions from '../actions/EpisodeActions'
 
 let audioPlayerListenerToken;
 let episodeStatusListenerToken;
@@ -29,6 +30,10 @@ const AudioPlayer = React.createClass({
     episodeStatusListenerToken.remove();
   },
 
+  componentDidUpdate: function() {
+    // debugger
+  },
+
   _onChange: function() {
     this.setState(getPlayingStatus());
   },
@@ -40,7 +45,7 @@ const AudioPlayer = React.createClass({
 
   setPlaybackPosition: function() {
     if (!this.state.loaded) {
-      this.player.currentTime = this.state.timeElapsed;
+      this.player.currentTime = this.state.subscription.timeElapsed;
       this.state.loaded = true;
     }
   },
@@ -52,8 +57,12 @@ const AudioPlayer = React.createClass({
   },
 
   saveStatus: function() {
-    debugger
-    AudioPlayerActions.updateEpisodeStatus(getPlayingStatus());
+    const podcastId = this.state.collectionId;
+    const epiGUID = this.state.guid;
+    const subId = this.state.subscription.id;
+    EpisodeActions.updateEpisodeStatus(podcastId, epiGUID, subId, {
+      timeElapsed: this.player.currentTime
+    })
   // AudioPlayerActions.updateTimeElapsed(this.state.epiGUID, this.player.currentTime);
   },
 
@@ -61,25 +70,25 @@ const AudioPlayer = React.createClass({
     clearInterval(this.savingInterval);
   },
 
-  isSubPodcast: function() {
-    if (this.state.isSub) {
-      return (
-        <audio onPlay={ this.startSavingInterval } onCanPlay={ this.setPlaybackPosition } id="player" autoPlay
-        controls src={ this.state.mp3Link } />
-        )
-    } else {
-      return (
-        <audio id="player" autoPlay controls src={ this.state.mp3Link } />
-        )
-    }
-  },
+  // isSubPodcast: function() {
+  //   if (this.state.isSub) {
+  //     return (
+  //       <audio onPlay={ this.startSavingInterval } onCanPlay={ this.setPlaybackPosition } id="player" autoPlay
+  //       controls src={ this.state.mp3Link } />
+  //       )
+  //   } else {
+  //     return (
+  //       <audio id="player" autoPlay controls src={ this.state.mp3Link } />
+  //       )
+  //   }
+  // },
 
   render: function() {
     return (
       <div className="audio-player">
         <audio autoPlay onPlay={ this.startSavingInterval } onCanPlayThrough={ this.setPlaybackPosition }
         onPause={ this.handlePause } onEnded={ this.stopSavingInterval } id="player" controls
-        src={ this.state.mp3Link } />
+        src={ this.state.url } />
       </div>
       );
   }

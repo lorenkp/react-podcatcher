@@ -13,5 +13,15 @@ module.exports = {
 
   fetchEpisodes: function(collectionId, feedUrl) {
     ApiUtil.fetchEpisodes(collectionId, feedUrl);
+  },
+
+  updateEpisodeStatus: function(podcastId, epiGUID, subId, payload) {
+    Dispatcher.dispatch({
+      actionType: EpisodeConstants.UPDATE_EPISODE_STATUS,
+      podcastId: podcastId,
+      epiGUID: epiGUID,
+      payload: payload
+    });
+    ApiUtil.updateEpisodeStatus(subId, payload);
   }
 };

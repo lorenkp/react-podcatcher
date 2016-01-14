@@ -74,19 +74,14 @@ module.exports = {
     });
   },
 
-  updateEpisodeStatus: function(status) {
+  updateEpisodeStatus: function(id, payload) {
     $.ajax({
       method: 'PATCH',
-      url: 'api/episode_statuses/' + status.id,
+      url: 'api/episode_statuses/' + id,
       data: {
-        status: {
-          id: status.id,
-          played: status.played,
-          favorite: status.favorite,
-          time_elapsed: status.timeElapsed
-        }
+        status: payload
       }
-    })
+    });
   }
 };
 

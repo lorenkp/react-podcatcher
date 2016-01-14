@@ -7,15 +7,23 @@ const Episode = React.createClass({
   handlePlay: function() {
     const mp3Link = this.props.episodeInfo.url;
     if (this.props.episodeInfo.subscription) {
-      AudioPlayerActions.playSubPodcast({
-        played: true,
-        isSub: true,
-        id: this.props.episodeInfo.subscription.id,
-        collectionId: this.props.episodeInfo.collectionId,
-        epiGUID: this.props.episodeInfo.guid,
-        mp3Link: mp3Link,
-        playing: true
-      });
+      // AudioPlayerActions.playSubPodcast({
+      //   played: true,
+      //   isSub: true,
+      //   id: this.props.episodeInfo.subscription.id,
+      //   collectionId: this.props.episodeInfo.collectionId,
+      //   epiGUID: this.props.episodeInfo.guid,
+      //   mp3Link: mp3Link,
+      //   playing: true
+      // });
+      const epiInfo = this.props.episodeInfo;
+      const podcastId = epiInfo.collectionId;
+      const epiGUID = epiInfo.guid;
+      const subId = epiInfo.subscription.id
+      EpisodeActions.updateEpisodeStatus(podcastId, epiGUID, subId, {
+        played: true
+      })
+      AudioPlayerActions.playSubPodcast(podcastId, epiGUID)
     } else {
       AudioPlayerActions.playNoSubPodcast({
         mp3Link: mp3Link,

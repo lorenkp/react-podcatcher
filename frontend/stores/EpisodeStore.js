@@ -22,22 +22,35 @@ function addInitialSubEpisodes(subscription) {
 
 function addSubscription(podcast) {
   _episodes[Object.keys(podcast)].forEach(function(episode) {
-    episode.subscription.played = false
+    episode.subscription = {
+      played: false,
+      timeElapsed: 0,
+      favorite: false
+    }
   })
 }
 
-function updateEpisodeStatus(status) {
-  let episode = _episodes[status.collectionId].find(function(e) {
-    return e.guid === status.guid
+function updateEpisodeStatus(podcastId, epiGUID, payload) {
+  let episode = findEpisode(podcastId, epiGUID);
+  Object.keys(payload).forEach(function(e) {
+    episode.subscription[e] = payload[e]
   })
-  Object.keys(status).forEach(function(e) {
-    episode.subscription[e] = status[e]
+}
+
+function findEpisode(podcastId, epiGUID) {
+  const episode = _episodes[podcastId].find(function(e) {
+    return e.guid === epiGUID
   })
+  return episode
 }
 
 
 EpisodeStore.getEpisodes = function(id) {
   return _episodes[id]
+}
+
+EpisodeStore.getEpisode = function(podcastId, epiGUID) {
+  return findEpisode(podcastId, epiGUID);
 }
 
 EpisodeStore.__onDispatch = function(action) {
@@ -52,6 +65,10 @@ EpisodeStore.__onDispatch = function(action) {
       break;
     case ApiConstants.RECEIVED_SUBSCRIPTIONS:
       addInitialSubEpisodes(action.subscriptions);
+      EpisodeStore.__emitChange();
+      break;
+    case EpisodeConstants.UPDATE_EPISODE_STATUS:
+      updateEpisodeStatus(action.podcastId, action.epiGUID, action.payload);
       EpisodeStore.__emitChange();
       break;
   }

@@ -19,18 +19,20 @@ module.exports = {
     });
   },
 
-  playSubPodcast: function(payload) {
+  playSubPodcast: function(podcastId, epiGUID) {
     // start playing podcast immediately, with info that may have been
     // pulled from server. going to the server to set played, or see if there's
     // duration to know about
+
     Dispatcher.dispatch({
       actionType: AudioPlayerConstants.PLAY_PODCAST,
-      payload: payload
+      podcastId: podcastId,
+      epiGUID: epiGUID
     });
-    this.updateEpisodeStatus(payload);
-  },
-
-  updateEpisodeStatus: function(payload) {
-    ApiUtil.updateEpisodeStatus(payload);
+  // this.updateEpisodeStatus(payload);
   }
+
+// updateEpisodeStatus: function(payload) {
+//   ApiUtil.updateEpisodeStatus(payload);
+// }
 };
