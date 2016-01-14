@@ -7,7 +7,7 @@ import EpisodeActions from '../actions/EpisodeActions'
 let audioPlayerListenerToken;
 let episodeStatusListenerToken;
 
-let SECONDS_INCREASE = 3;
+let SECONDS_INCREASE = 10;
 
 function getPlayingStatus() {
   return AudioPlayerStore.getPlayingStatus()
@@ -30,8 +30,17 @@ const AudioPlayer = React.createClass({
     episodeStatusListenerToken.remove();
   },
 
-  componentDidUpdate: function() {
-    // debugger
+  // componentDidUpdate: function() {
+  //   if (this.savingInterval) {
+  //     this.stopSavingInterval();
+  //   }
+  // },
+
+  componentWillUpdate: function() {
+    if (this.savingInterval) {
+      this.saveStatus();
+      this.stopSavingInterval();
+    }
   },
 
   _onChange: function() {
@@ -70,25 +79,24 @@ const AudioPlayer = React.createClass({
     clearInterval(this.savingInterval);
   },
 
-  // isSubPodcast: function() {
-  //   if (this.state.isSub) {
-  //     return (
-  //       <audio onPlay={ this.startSavingInterval } onCanPlay={ this.setPlaybackPosition } id="player" autoPlay
-  //       controls src={ this.state.mp3Link } />
-  //       )
-  //   } else {
-  //     return (
-  //       <audio id="player" autoPlay controls src={ this.state.mp3Link } />
-  //       )
-  //   }
-  // },
+  isSubPodcast: function() {
+    if (this.state.subscription) {
+      return (
+        <audio autoPlay onPlay={ this.startSavingInterval } onCanPlayThrough={ this.setPlaybackPosition }
+        onPause={ this.handlePause } onEnded={ this.stopSavingInterval } id="player" controls src={ this.state.url }
+        />
+        )
+    } else {
+      return (
+        <audio id="player" autoPlay controls src={ this.state.url } />
+        )
+    }
+  },
 
   render: function() {
     return (
       <div className="audio-player">
-        <audio autoPlay onPlay={ this.startSavingInterval } onCanPlayThrough={ this.setPlaybackPosition }
-        onPause={ this.handlePause } onEnded={ this.stopSavingInterval } id="player" controls
-        src={ this.state.url } />
+        { this.isSubPodcast() }
       </div>
       );
   }

@@ -12,14 +12,14 @@ module.exports = {
     })
   },
 
-  playNoSubPodcast: function(payload) {
-    Dispatcher.dispatch({
-      actionType: AudioPlayerConstants.PLAY_PODCAST,
-      payload: payload
-    });
-  },
+  // playNoSubPodcast: function(payload) {
+  //   Dispatcher.dispatch({
+  //     actionType: AudioPlayerConstants.PLAY_PODCAST,
+  //     payload: payload
+  //   });
+  // },
 
-  playSubPodcast: function(podcastId, epiGUID) {
+  playPodcast: function(podcastId, epiGUID) {
     // start playing podcast immediately, with info that may have been
     // pulled from server. going to the server to set played, or see if there's
     // duration to know about

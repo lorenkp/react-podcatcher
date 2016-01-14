@@ -5,8 +5,12 @@ import { Link } from 'react-router';
 
 const Episode = React.createClass({
   handlePlay: function() {
-    const mp3Link = this.props.episodeInfo.url;
+    // const mp3Link = this.props.episodeInfo.url;
+    const epiInfo = this.props.episodeInfo;
+    const podcastId = epiInfo.collectionId;
+    const epiGUID = epiInfo.guid;
     if (this.props.episodeInfo.subscription) {
+      const subId = epiInfo.subscription.id
       // AudioPlayerActions.playSubPodcast({
       //   played: true,
       //   isSub: true,
@@ -16,20 +20,11 @@ const Episode = React.createClass({
       //   mp3Link: mp3Link,
       //   playing: true
       // });
-      const epiInfo = this.props.episodeInfo;
-      const podcastId = epiInfo.collectionId;
-      const epiGUID = epiInfo.guid;
-      const subId = epiInfo.subscription.id
       EpisodeActions.updateEpisodeStatus(podcastId, epiGUID, subId, {
         played: true
       })
-      AudioPlayerActions.playSubPodcast(podcastId, epiGUID)
-    } else {
-      AudioPlayerActions.playNoSubPodcast({
-        mp3Link: mp3Link,
-        playing: true
-      });
     }
+    AudioPlayerActions.playPodcast(podcastId, epiGUID)
   },
 
   played: function() {
