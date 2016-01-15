@@ -3,6 +3,7 @@ import Dispatcher from '../dispatcher/dispatcher';
 import SubscribeConstants from '../constants/SubscribeConstants';
 import ApiConstants from '../constants/ApiConstants';
 import PodcastStore from './PodcastStore';
+import EpisodeStore from './EpisodeStore';
 let SubscriptionStore = new Store(Dispatcher);
 
 let _subscriptions = {}
@@ -30,7 +31,7 @@ SubscriptionStore.checkSub = function(id) {
   var subs = [];
   for (var key in _subscriptions) {
     if (_subscriptions.hasOwnProperty(key)) {
-      subs.push(parseInt(key))
+      subs.push(parseInt(key));
     }
   }
   return subs.indexOf(parseInt(id)) !== -1;
@@ -40,10 +41,20 @@ SubscriptionStore.getSubscriptions = function() {
   let podcasts = [];
   for (var key in _subscriptions) {
     if (_subscriptions.hasOwnProperty(key)) {
-      podcasts.push(PodcastStore.getPodcast(parseInt(key)))
+      podcasts.push(PodcastStore.getPodcast(parseInt(key)));
     }
   }
   return podcasts;
+}
+
+SubscriptionStore.getNewReleases = function() {
+  let episodes = [];
+  for (var key in _subscriptions) {
+    if (_subscriptions.hasOwnProperty(key)) {
+      episodes.push(EpisodeStore.getLatestEpisode(parseInt(key)));
+    }
+  }
+  return episodes;
 }
 
 SubscriptionStore.__onDispatch = function(action) {

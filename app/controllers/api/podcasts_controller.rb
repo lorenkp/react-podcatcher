@@ -32,6 +32,9 @@ class Api::PodcastsController < ApplicationController
     Podcast.new(snake_keys_hash).save
   end
 
+  def new_releases
+  end
+
   private
 
   def construct_podcast_hash(hashed_xml)

@@ -1,6 +1,7 @@
 import React from 'react';
 import SubscriptionStore from '../../stores/SubscriptionStore';
-import PodcastItem from '../podcast/PodcastItem';
+import PodcastIndex from './PodcastIndex';
+import NewReleasesButton from './NewReleasesButton';
 
 let listenerToken
 
@@ -40,11 +41,8 @@ const Sidebar = React.createClass({
 
     return (
       <div className="sidebar">
-        { this.state.subscriptions.map(function(podcast, index) {
-            return (
-              <PodcastItem key={ index } podcast={ podcast } />
-              )
-          }) }
+        <NewReleasesButton/>
+        <PodcastIndex podcasts={ this.state.subscriptions } />
       </div>
       )
   }

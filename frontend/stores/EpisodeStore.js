@@ -52,6 +52,14 @@ function findEpisode(podcastId, epiGUID) {
   return episode
 }
 
+EpisodeStore.getLatestEpisode = function() {
+  sortByDate()
+  Object.keys(_episodes).forEach(function(key) {
+    if (_episodes[key][0].subscription.played === false) {
+      return _episodes[key][0]
+    }
+  });
+}
 
 EpisodeStore.getEpisodes = function(id) {
   sortByDate();

@@ -5,6 +5,7 @@ let PodcastStore = new Store(Dispatcher);
 const PodcastConstants = require('../constants/PodcastConstants');
 
 let _podcasts = {};
+let _newReleases = [];
 
 function addPodcast(podcast) {
   _podcasts[podcast.collectionId] = podcast

@@ -4,46 +4,64 @@ import SubscriptionStore from '../../stores/SubscriptionStore'
 import EpisodeActions from '../../actions/EpisodeActions';
 import Episode from './Episode';
 
-let episodeListenerToken
-// let subscriptionListenerToken
+// let episodeListenerToken
+// // let subscriptionListenerToken
 
-function getEpisodes(id) {
-  return {
-    episodes: EpisodeStore.getEpisodes(id)
-  }
-}
+// function getEpisodes(id) {
+//   return {
+//     episodes: EpisodeStore.getEpisodes(id)
+//   }
+// }
 
 const EpisodeTable = React.createClass({
-  getInitialState: function() {
-    return getEpisodes(this.props.params.id)
-  },
+  // getInitialState: function() {
+  //   return getEpisodes(this.props.params.id)
+  // },
 
-  componentDidMount: function() {
-    episodeListenerToken = EpisodeStore.addListener(this._onChange);
-    // subscriptionListenerToken = SubscriptionStore.addListener(this._onChange);
-    const collectionId = this.props.params.id;
-    const feedUrl = this.props.location.query.feedUrl;
-    EpisodeActions.fetchEpisodes(collectionId, feedUrl);
-  },
+  // componentDidMount: function() {
+  //   episodeListenerToken = EpisodeStore.addListener(this._onChange);
+  //   // subscriptionListenerToken = SubscriptionStore.addListener(this._onChange);
+  //   this.findAction();
+  // },
 
-  componentDidUpdate: function(prevProps) {
-    let oldId = prevProps.params.id
-    let newId = this.props.params.id
-    if (newId !== oldId) {
-      this.setState(getEpisodes(newId)) || EpisodeActions.fetchEpisodes(newId,
-        this.props.location.query.feedUrl)
+  // findAction: function() {
+  //   const action = this.props.route.path.split('/')[2];
+  //   switch (action) {
+  //     case 'new_releases':
+  //       this.newReleases()
+  //       break;
+  //     default:
+  //       const collectionId = this.props.params.id;
+  //       const feedUrl = this.props.location.query.feedUrl;
+  //       EpisodeActions.fetchEpisodes(collectionId, feedUrl);
+  //       break;
+  //   }
+  // },
 
-    }
-  },
+  // newReleases: function() {},
 
-  componentWillUnmount: function() {
-    episodeListenerToken.remove();
-  // subscriptionListenerToken.remove();
-  },
+  // componentDidUpdate: function(prevProps) {
+  //   let oldId = prevProps.params.id
+  //   let newId = this.props.params.id
+  //   if (newId !== oldId) {
+  //     this.setState(getEpisodes(newId)) || EpisodeActions.fetchEpisodes(newId,
+  //       this.props.location.query.feedUrl)
+  //   }
+  // },
 
-  _onChange: function() {
-    this.setState(getEpisodes(this.props.params.id));
-  },
+  // componentWillUnmount: function() {
+  //   episodeListenerToken.remove();
+  // // subscriptionListenerToken.remove();
+  // },
+
+  // is the table being used to show a podcast, or a mixed feed
+  // isPodcastShow: function() {
+  //   return this.props.route.path === 'episodes';
+  // },
+
+  // _onChange: function() {
+  //   this.setState(getEpisodes(this.props.params.id));
+  // },
 
   render: function() {
 
@@ -56,6 +74,7 @@ const EpisodeTable = React.createClass({
 
     return (
       <div>
+        hello
         { this.state.episodes.map(function(episode, index) {
             return (
               <Episode key={ index } episodeInfo={ episode } podcastId={ podcastId }

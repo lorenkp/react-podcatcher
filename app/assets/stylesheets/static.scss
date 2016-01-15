@@ -1,3 +1,5 @@
+$border: 1px solid #ddd;
+
 body {
   font-family: 'proxima-nova';
   font-weight: 300;
@@ -49,7 +51,7 @@ p {
   width: 325px;
   left: 0;
   top: 0;
-  background-color: lightgray;
+  border: $border;
 }
 
 .main {
@@ -58,12 +60,12 @@ p {
 
 .podcast-item {
   cursor: pointer;
-  border-bottom: 1px solid gray;
+  border-bottom: $border;
   img {
     width: 75px;
     height: 75px;
     vertical-align: middle;
-    border: 1px solid #ddd;
+    border: $border;
   }
   .podcast-text {
     margin-left: 10px;
@@ -92,7 +94,7 @@ p {
     width: 180px;
     height: 180px;
     position: absolute;
-    border: 1px solid #ddd;
+    border: $border;
   }
   .podcast-description-text {
     display: inline-block;
@@ -113,10 +115,25 @@ p {
   background: gray;
 }
 
+.new-releases {
+  // cursor: pointer;
+  // height: 55px;
+  // line-height: 55px;
+  // border-bottom: $border;
+  // position: relative;
+  // font-size: 20px;
+  // left: 20px;
+  // vertical-align: center;
+  display: block;
+  height: 55px;
+  line-height: 55px;
+  border-bottom: $border;
+  font-size: 17px;
+  padding-left: 20px;
+}
+
 .episode-description {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: gray;
+  border-bottom: $border;
   padding-bottom: 10px;
   margin-bottom: 10px;
   .episode-date {
