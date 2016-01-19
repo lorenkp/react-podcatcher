@@ -32,9 +32,9 @@ const Sidebar = React.createClass({
 
   render: function() {
 
-    if (this.state.subscriptions.length < 1) {
-      return null
-    }
+  // if (this.state.subscriptions.length < 1) {
+//   return null
+// }
 
     this.state.subscriptions.sort(function(a, b) {
       return b.collectionName - a.collectionName;
