@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Search from './components/search/searchBox';
 import MainView from './components/podcast/MainView';
 import { Router, Route } from 'react-router';
-import EpisodeTable from './components/episode/EpisodeTable';
+// import EpisodeTable from './components/episode/EpisodeTable';
 import PodcastApp from './components/PodcastApp'
 import ApiUtil from './util/apiUtil';
 
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <Router>
       <Route path="/" component={ PodcastApp }>
         <Route path="podcasts/new_releases" component={ MainView } />
+        <Route path="podcasts/in_progress" component={ MainView } />
         <Route path="podcasts/:id/episodes" component={ MainView } />
         <Route path="search" component={ Search } />
       </Route>

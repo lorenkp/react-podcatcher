@@ -2,6 +2,7 @@ import React from 'react';
 import SubscriptionStore from '../../stores/SubscriptionStore';
 import PodcastIndex from './PodcastIndex';
 import NewReleasesButton from './NewReleasesButton';
+import InProgressButton from './InProgressButton';
 
 let listenerToken
 
@@ -42,6 +43,7 @@ const Sidebar = React.createClass({
     return (
       <div className="sidebar">
         <NewReleasesButton/>
+        <InProgressButton/>
         <PodcastIndex podcasts={ this.state.subscriptions } />
       </div>
       )

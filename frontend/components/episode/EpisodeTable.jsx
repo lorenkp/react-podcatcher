@@ -1,7 +1,7 @@
 import React from 'react';
-import EpisodeStore from '../../stores/EpisodeStore'
-import SubscriptionStore from '../../stores/SubscriptionStore'
-import EpisodeActions from '../../actions/EpisodeActions';
+// import EpisodeStore from '../../stores/EpisodeStore'
+// import SubscriptionStore from '../../stores/SubscriptionStore'
+// import EpisodeActions from '../../actions/EpisodeActions';
 import Episode from './Episode';
 
 // let episodeListenerToken
@@ -65,17 +65,17 @@ const EpisodeTable = React.createClass({
 
   render: function() {
 
-    if (typeof this.state.episodes === 'undefined') {
+    if (typeof this.props.episodes === 'undefined' || this.props.episodes.length < 1) {
       return null
     }
+    // debugger
 
-
-    let podcastId = this.props.params.id;
+    const podcastId = this.props.episodes[0].collectionId;
 
     return (
       <div>
         hello
-        { this.state.episodes.map(function(episode, index) {
+        { this.props.episodes.map(function(episode, index) {
             return (
               <Episode key={ index } episodeInfo={ episode } podcastId={ podcastId }
               />

@@ -1,5 +1,4 @@
 $border: 1px solid #ddd;
-
 body {
   font-family: 'proxima-nova';
   font-weight: 300;
@@ -14,6 +13,15 @@ a {
 
 p {
   margin: 0;
+}
+
+.sub-button {
+  margin-top: 15px;
+  cursor: pointer;
+  span {
+    border: 1px solid black;
+    padding: 5px;
+  }
 }
 
 .search-result-item {

@@ -1,5 +1,6 @@
 import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
+import SubscriptionStore from './SubscriptionStore';
 let EpisodeStore = new Store(Dispatcher);
 let EpisodeConstants = require('../constants/EpisodeConstants');
 const ApiConstants = require('../constants/ApiConstants');
@@ -52,13 +53,41 @@ function findEpisode(podcastId, epiGUID) {
   return episode
 }
 
-EpisodeStore.getLatestEpisode = function() {
+function isEmpty() {
+  return Object.keys(_episodes).length === 0;
+}
+
+EpisodeStore.getNewReleases = function() {
   sortByDate()
-  Object.keys(_episodes).forEach(function(key) {
-    if (_episodes[key][0].subscription.played === false) {
-      return _episodes[key][0]
+  let newReleases = [];
+  const podIds = SubscriptionStore.getPodIds();
+  podIds.forEach(function(id) {
+    if (_episodes[id][0].subscription.played === false) {
+      newReleases.push(_episodes[id][0]);
     }
+  })
+  return newReleases;
+}
+
+EpisodeStore.getInProgress = function() {
+  if (isEmpty()) {
+    return
+  }
+  let inProgress = []
+  const podIds = SubscriptionStore.getPodIds();
+  podIds.forEach(function(id) {
+    _episodes[id].forEach(function(episode) {
+      if (episode.subscription.played === true) {
+        inProgress.push(episode);
+      }
+    });
   });
+
+  inProgress.sort(function(a, b) {
+    return new Date(b.pubDate) - new Date(a.pubDate);
+  })
+
+  return inProgress;
 }
 
 EpisodeStore.getEpisodes = function(id) {

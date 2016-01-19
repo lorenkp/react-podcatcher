@@ -13,6 +13,10 @@ var PodcastDescription = React.createClass({
   },
 
   render: function() {
+    if (typeof this.props.podcast.info === 'undefined') {
+      return null
+    }
+
     const {artistName, collectionName, artworkUrl600} = this.props.podcast.info;
     return (
       <div className="podcast-description">

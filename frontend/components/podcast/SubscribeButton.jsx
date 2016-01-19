@@ -4,10 +4,8 @@ var SubscribeButton = React.createClass({
 
   render: function() {
     return (
-      <div onClick={ this.props.onToggle }>
-        <p>
-          { this.props.subState ? 'Unsubscribe' : 'Subscribe' }
-        </p>
+      <div onClick={ this.props.onToggle } className="sub-button">
+        <span>{ this.props.subState ? 'Unsubscribe' : 'Subscribe' }</span>
       </div>
       )
   }
