@@ -64,7 +64,7 @@ SearchResultsStore.__onDispatch = function(action) {
   }
 };
 
-// case SearchResultsConstants.PLAY_PODCAST:
+// case SearchResultsConstants.LOAD_PODCAST:
 //   updateAudioPlayer(true, action.mp3Link);
 //   SearchResultsStore.__emitChange();
 //   break;

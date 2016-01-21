@@ -1,6 +1,5 @@
 import Dispatcher from '../dispatcher/dispatcher';
 import AudioPlayerConstants from '../constants/AudioPlayerConstants';
-import ApiUtil from '../util/apiUtil'
 
 module.exports = {
 
@@ -12,27 +11,27 @@ module.exports = {
     })
   },
 
-  // playNoSubPodcast: function(payload) {
-  //   Dispatcher.dispatch({
-  //     actionType: AudioPlayerConstants.PLAY_PODCAST,
-  //     payload: payload
-  //   });
-  // },
+  pause: function() {
+    Dispatcher.dispatch({
+      actionType: AudioPlayerConstants.PAUSE
+    })
+  },
 
-  playPodcast: function(podcastId, epiGUID) {
+  play: function() {
+    Dispatcher.dispatch({
+      actionType: AudioPlayerConstants.PLAY
+    })
+  },
+
+  loadPodcast: function(podcastId, epiGUID) {
     // start playing podcast immediately, with info that may have been
     // pulled from server. going to the server to set played, or see if there's
     // duration to know about
 
     Dispatcher.dispatch({
-      actionType: AudioPlayerConstants.PLAY_PODCAST,
+      actionType: AudioPlayerConstants.LOAD_PODCAST,
       podcastId: podcastId,
       epiGUID: epiGUID
     });
-  // this.updateEpisodeStatus(payload);
   }
-
-// updateEpisodeStatus: function(payload) {
-//   ApiUtil.updateEpisodeStatus(payload);
-// }
 };

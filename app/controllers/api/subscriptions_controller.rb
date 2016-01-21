@@ -21,6 +21,10 @@ class Api::SubscriptionsController < ApplicationController
     render json: @subscriptions
   end
 
+  def new_releases
+
+  end
+
   private
 
   def create_episode_statuses

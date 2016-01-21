@@ -4,23 +4,26 @@ import EpisodeStore from './EpisodeStore';
 let AudioPlayerStore = new Store(Dispatcher);
 const AudioPlayerConstants = require('../constants/AudioPlayerConstants');
 
-// let _playerStatus = {
-//   mp3Link: '',
-//   timeElapsed: 0,
-//   isSub: false,
-//   playing: false,
-//   loaded: false,
-//   epiGUID: ''
-// };
-
 let _playerStatus = {};
 
 function loadPodcast(podcastId, epiGUID) {
-  // Object.keys(payload).forEach(function(attr) {
-  //   _playerStatus[attr] = payload[attr]
-  // });
-  _playerStatus = EpisodeStore.getEpisode(podcastId, epiGUID);
-  _playerStatus.loaded = false
+  _playerStatus = {
+    playbackPositionLoaded: false,
+    paused: false
+  }
+
+  const episode = EpisodeStore.getEpisode(podcastId, epiGUID);
+  Object.keys(episode).forEach(function(key) {
+    _playerStatus[key] = episode[key];
+  })
+}
+
+function markPlaying() {
+  _playerStatus.paused = false;
+}
+
+function markPaused() {
+  _playerStatus.paused = true;
 }
 
 AudioPlayerStore.getPlayingStatus = function() {
@@ -29,8 +32,16 @@ AudioPlayerStore.getPlayingStatus = function() {
 
 AudioPlayerStore.__onDispatch = function(action) {
   switch (action.actionType) {
-    case AudioPlayerConstants.PLAY_PODCAST:
+    case AudioPlayerConstants.LOAD_PODCAST:
       loadPodcast(action.podcastId, action.epiGUID);
+      AudioPlayerStore.__emitChange();
+      break;
+    case AudioPlayerConstants.PLAY:
+      markPlaying();
+      AudioPlayerStore.__emitChange();
+      break;
+    case AudioPlayerConstants.PAUSE:
+      markPaused();
       AudioPlayerStore.__emitChange();
       break;
   }

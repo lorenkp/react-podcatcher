@@ -2,13 +2,14 @@ import { Store } from 'flux/utils';
 import Dispatcher from '../dispatcher/dispatcher';
 import SubscriptionStore from './SubscriptionStore';
 let EpisodeStore = new Store(Dispatcher);
-let EpisodeConstants = require('../constants/EpisodeConstants');
-const ApiConstants = require('../constants/ApiConstants');
-const SubscribeConstants = require('../constants/SubscribeConstants');
-const AudioPlayerConstants = require('../constants/AudioPlayerConstants');
+import EpisodeConstants from '../constants/EpisodeConstants';
+import ApiConstants from '../constants/ApiConstants';
+import SubscribeConstants from '../constants/SubscribeConstants';
 
 
 let _episodes = {};
+
+let newReleases = [];
 
 function addEpisodes(episodes) {
   const podId = episodes[0].collectionId;
@@ -58,8 +59,11 @@ function isEmpty() {
 }
 
 EpisodeStore.getNewReleases = function() {
+  if (Object.keys(_episodes).length < 1) {
+    return
+  }
   sortByDate()
-  let newReleases = [];
+  newReleases = [];
   const podIds = SubscriptionStore.getPodIds();
   podIds.forEach(function(id) {
     if (_episodes[id][0].subscription.played === false) {
@@ -117,6 +121,10 @@ EpisodeStore.__onDispatch = function(action) {
       updateEpisodeStatus(action.podcastId, action.epiGUID, action.payload);
       EpisodeStore.__emitChange();
       break;
+  // case SubscribeConstants.RECEIVED_NEW_RELEASES:
+  //   addNewReleases(action.newReleases);
+  //   EpisodeStore.__emitChange();
+  //   break;
   }
 };
 

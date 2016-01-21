@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom';
 import Search from './components/search/searchBox';
 import MainView from './components/podcast/MainView';
 import { Router, Route } from 'react-router';
-// import EpisodeTable from './components/episode/EpisodeTable';
 import PodcastApp from './components/PodcastApp'
-import ApiUtil from './util/apiUtil';
-
-ApiUtil.fetchSubscriptions();
 
 document.addEventListener("DOMContentLoaded", function() {
   ReactDOM.render((

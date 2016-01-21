@@ -56,6 +56,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
+  gem 'bullet'
 end
 
 group :development do

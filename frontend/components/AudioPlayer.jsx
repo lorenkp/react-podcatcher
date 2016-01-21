@@ -20,7 +20,6 @@ const AudioPlayer = React.createClass({
   },
 
   componentDidMount: function() {
-    this.player = document.getElementById('player');
     audioPlayerListenerToken = AudioPlayerStore.addListener(this._onChange);
     episodeStatusListenerToken = EpisodeStatusStore.addListener(this._onChange)
   },
@@ -30,11 +29,9 @@ const AudioPlayer = React.createClass({
     episodeStatusListenerToken.remove();
   },
 
-  // componentDidUpdate: function() {
-  //   if (this.savingInterval) {
-  //     this.stopSavingInterval();
-  //   }
-  // },
+  componentDidUpdate: function() {
+    this.player = document.getElementById('player');
+  },
 
   componentWillUpdate: function() {
     if (this.savingInterval) {
@@ -53,9 +50,9 @@ const AudioPlayer = React.createClass({
   },
 
   setPlaybackPosition: function() {
-    if (!this.state.loaded) {
+    if (!this.state.playbackPositionLoaded) {
       this.player.currentTime = this.state.subscription.timeElapsed;
-      this.state.loaded = true;
+      this.state.playbackPositionLoaded = true;
     }
   },
 
@@ -79,6 +76,16 @@ const AudioPlayer = React.createClass({
     clearInterval(this.savingInterval);
   },
 
+  handlePausePlay: function() {
+    if (this.player.paused) {
+      this.player.play()
+      AudioPlayerActions.play();
+    } else {
+      this.player.pause();
+      AudioPlayerActions.pause();
+    }
+  },
+
   isSubPodcast: function() {
     if (this.state.subscription) {
       return (
@@ -94,8 +101,13 @@ const AudioPlayer = React.createClass({
   },
 
   render: function() {
+    if (Object.keys(this.state).length < 1) {
+      return null
+    }
     return (
       <div className="audio-player">
+        <i onClick={ this.handlePausePlay } className={ this.state.paused ? "fa fa-play play-button" : "fa fa-pause play-button" }></i>
+        <span className="skip_forward_button"></span>
         { this.isSubPodcast() }
       </div>
       );

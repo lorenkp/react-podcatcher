@@ -74,7 +74,6 @@ const EpisodeTable = React.createClass({
 
     return (
       <div>
-        hello
         { this.props.episodes.map(function(episode, index) {
             return (
               <Episode key={ index } episodeInfo={ episode } podcastId={ podcastId }
