@@ -1,10 +1,12 @@
-# "Podcastic" a SPA podcast catcher built with Rails API and React/Flux
+# "Podcastic", a SPA podcatcher built with a Rails API and React (Flux style)
 
-![alt text](https://res.cloudinary.com/loren/image/upload/v1454432101/podtastic_qqqi8j.jpg)
+Queries iTunes API to acquire podcast's XML feed, which is parsed to derive podcast and episode information.
 
-Work in progress.
+This is a work in progress.
 
-- [x] Instant search with drop down results
+![alt text](https://res.cloudinary.com/loren/image/upload/v1454433389/podcastic_ymfuu8.jpg)
+
+- [x] Fuzzy search with drop down results
 - [x] Clicking on podcast search result will reveal the podcast info, along with a list of episodes
 - [x] Player in sticky footer
 - [x] Subscribe to podcasts and have them listed in a feed
