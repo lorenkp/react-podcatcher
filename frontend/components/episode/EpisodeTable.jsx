@@ -64,7 +64,6 @@ const EpisodeTable = React.createClass({
   // },
 
   render: function() {
-
     if (typeof this.props.episodes === 'undefined' || this.props.episodes.length < 1) {
       return null
     }

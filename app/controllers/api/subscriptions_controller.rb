@@ -17,7 +17,10 @@ class Api::SubscriptionsController < ApplicationController
   end
 
   def index
-    @subscriptions = Subscription.all
+    @subscriptions = Subscription.includes(:podcast, :episodes)
+    @subscriptions.each do |subscription|
+      subscription.podcast.feed_url
+    end
     render json: @subscriptions
   end
 

@@ -37,6 +37,7 @@ const AudioPlayer = React.createClass({
     if (this.savingInterval) {
       this.saveStatus();
       this.stopSavingInterval();
+      this.savingInterval = null;
     }
   },
 
@@ -104,11 +105,12 @@ const AudioPlayer = React.createClass({
     if (Object.keys(this.state).length < 1) {
       return null
     }
+    // <span className="skip_forward_button"></span>
     return (
       <div className="audio-player">
-        <i onClick={ this.handlePausePlay } className={ this.state.paused ? "fa fa-play play-button" : "fa fa-pause play-button" }></i>
-        <span className="skip_forward_button"></span>
         { this.isSubPodcast() }
+        <i className="back-button"></i>
+        <i onClick={ this.handlePausePlay } className={ this.state.paused ? "fa fa-play play-button" : "fa fa-pause play-button" }></i>
       </div>
       );
   }

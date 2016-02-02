@@ -9,7 +9,7 @@ const PodcastItem = React.createClass({
   goToPodcastIndex: function() {
     const collectionId = this.props.podcast.collectionId
     const podcastIndex = 'podcasts/' + collectionId + '/episodes';
-    SearchActions.resetSearch();
+    SearchActions.hideSearchResults();
     this.history.push(podcastIndex + '?feedUrl=' + this.props.podcast.feedUrl)
   },
 

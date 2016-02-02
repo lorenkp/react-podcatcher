@@ -1,3 +1,4 @@
+require 'open-uri'
 class Api::SearchController < ApplicationController
   # keys for xml feed
   XML_FIELDS = [
@@ -22,7 +23,7 @@ class Api::SearchController < ApplicationController
   end
 
   def show
-    query = "/search?entity=podcast&attribute=titleTerm&limit=10&term=#{URI.encode(params[:id])}"
+    query = "https://itunes.apple.com/search?entity=podcast&attribute=titleTerm&limit=10&term=#{URI.encode(params[:id])}"
     result = hash_podcasts(itunes_query_results(query))
     render json: result
   end
@@ -42,6 +43,7 @@ class Api::SearchController < ApplicationController
   def itunes_query_results(query)
     response = @itunes_connection.get(query).to_s
     JSON.parse(response)['results']
+    # JSON.parse(open(query).read)['results']
   end
 
   def hash_podcasts(json_results)

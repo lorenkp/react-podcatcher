@@ -28,7 +28,8 @@ var SearchInput = React.createClass({
 
   render: function() {
     return (
-      <input onChange={ this.handleOnChange } value={ this.state.value } />
+      <input placeholder="Search for Podcasts" onChange={ this.handleOnChange } value={ this.state.value }
+      />
       );
   }
 
