@@ -25,7 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'crack'
 gem 'puma'
 gem 'http'
-gem 'httparty'
+# gem 'httparty'
 gem "active_model_serializers", github: "rails-api/active_model_serializers"
 gem 'awrence'
 gem 'plissken'
@@ -56,6 +56,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'
+  gem 'bullet'
 end
 
 group :development do

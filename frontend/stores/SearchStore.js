@@ -3,47 +3,30 @@ import AppDispatcher from '../dispatcher/dispatcher'
 let SearchResultsStore = new Store(AppDispatcher);
 import SearchResultsConstants from '../constants/searchResultsConstants'
 
-var _results = [];
-var _listing = [];
-let resultsReceived = false;
-var audioPlayerStatus = {};
+var _searchState = {
+  resultsReceived: false,
+  searchTerm: '',
+  results: null
+}
 
 function addResults(results) {
-  _results = results;
-  resultsReceived = true;
+  _searchState.results = results;
+  _searchState.resultsReceived = true;
 }
 
-function addListing(listing) {
-  _listing = listing;
+function hideSearchResults() {
+  _searchState.resultsReceived = false;
 }
 
-function resetSearch() {
-  _results = [];
-  resultsReceived = false;
-}
-
-function updateAudioPlayer(flag, mp3Link) {
-  audioPlayerStatus = {
-    podcastPlaying: flag,
-    mp3Link: mp3Link
-  };
-}
-
-SearchResultsStore.getResults = function() {
-  return (
-  {
-    results: _results,
-    resultsReceived: resultsReceived
+function changeSearchTerm(term) {
+  _searchState.searchTerm = term;
+  if (term === '') {
+    hideSearchResults();
   }
-  )
 }
 
-SearchResultsStore.getListing = function() {
-  return _listing;
-}
-
-SearchResultsStore.getAudioPlayerStatus = function() {
-  return audioPlayerStatus;
+SearchResultsStore.getSearchState = function() {
+  return _searchState;
 }
 
 SearchResultsStore.__onDispatch = function(action) {
@@ -52,21 +35,15 @@ SearchResultsStore.__onDispatch = function(action) {
       addResults(action.results);
       SearchResultsStore.__emitChange();
       break;
-    case SearchResultsConstants.PODCAST_LISTING_RECEIVED:
-      addListing(action.podcast);
+    case SearchResultsConstants.HIDE_SEARCH_RESULTS:
+      hideSearchResults()
       SearchResultsStore.__emitChange();
       break;
-
-    case SearchResultsConstants.RESET_SEARCH:
-      resetSearch()
+    case SearchResultsConstants.SEARCH_TERM_CHANGE:
+      changeSearchTerm(action.term);
       SearchResultsStore.__emitChange();
       break;
   }
 };
-
-// case SearchResultsConstants.PLAY_PODCAST:
-//   updateAudioPlayer(true, action.mp3Link);
-//   SearchResultsStore.__emitChange();
-//   break;
 
 module.exports = SearchResultsStore;

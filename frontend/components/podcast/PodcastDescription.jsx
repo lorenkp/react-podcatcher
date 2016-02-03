@@ -17,16 +17,23 @@ var PodcastDescription = React.createClass({
       return null
     }
 
-    const {artistName, collectionName, artworkUrl600} = this.props.podcast.info;
+    const {artistName, collectionName, artworkUrl600, description} = this.props.podcast.info;
     return (
       <div className="podcast-description">
-        <img src={ artworkUrl600 }></img>
+        <SubscribeButton onToggle={ this.toggle } subState={ this.props.podcast.subscribed } />
+        <div className="podcast-avatar">
+          <img src={ artworkUrl600 }></img>
+        </div>
         <div className="podcast-description-text">
           <h1>{ collectionName }</h1>
+          <br/>
           <p>
             { artistName }
           </p>
-          <SubscribeButton onToggle={ this.toggle } subState={ this.props.podcast.subscribed } />
+          <br/>
+          <p>
+            { description }
+          </p>
         </div>
       </div>
       )

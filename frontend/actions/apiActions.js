@@ -7,15 +7,22 @@ import ApiConstants from '../constants/ApiConstants'
 
 module.exports = {
 
-  fetchEpisodes: function(collectionId, feedUrl) {
-    ApiUtil.fetchEpisodes(collectionId, feedUrl);
+  // fetchEpisodes: function(collectionId, feedUrl) {
+  //   ApiUtil.fetchEpisodes(collectionId, feedUrl);
+  // },
+
+  receivedEpisodes: function(episodes) {
+    Dispatcher.dispatch({
+      actionType: EpisodeConstants.RECEIVED_EPISODES,
+      episodes: episodes
+    })
   },
 
-  receiveSearchResults: function(results) {
+  receivedNewReleases: function(newReleases) {
     Dispatcher.dispatch({
-      actionType: SearchResultsConstants.SEARCH_RESULTS_RECEIVED,
-      results: results
-    });
+      actionType: SubscribeConstants.RECEIVED_NEW_RELEASES,
+      newReleases: newReleases
+    })
   },
 
   receivedPodcast: function(podcast) {
@@ -25,20 +32,12 @@ module.exports = {
     })
   },
 
-  receivedEpisodes: function(episodes) {
+  receiveSearchResults: function(results) {
     Dispatcher.dispatch({
-      actionType: EpisodeConstants.RECEIVED_EPISODES,
-      episodes: episodes
-    })
+      actionType: SearchResultsConstants.SEARCH_RESULTS_RECEIVED,
+      results: results
+    });
   },
-
-  receivedSubscriptions: function(subscriptions) {
-    Dispatcher.dispatch({
-      actionType: ApiConstants.RECEIVED_SUBSCRIPTIONS,
-      subscriptions: subscriptions
-    })
-  },
-
   receivedSubConf: function(sub) {
     let subscription = {};
     subscription[sub.podcast.collectionId] = sub.id;
@@ -46,6 +45,18 @@ module.exports = {
       actionType: SubscribeConstants.ADD_SUBSCRIPTION,
       subscription: subscription
     });
+  },
+
+
+
+
+  receivedSubscriptions: function(subscriptions) {
+    Dispatcher.dispatch({
+      actionType: ApiConstants.RECEIVED_SUBSCRIPTIONS,
+      subscriptions: subscriptions
+    })
   }
+
+
 };
 

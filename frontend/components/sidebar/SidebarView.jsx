@@ -13,13 +13,18 @@ function getSubscriptions() {
   }
 }
 
-const Sidebar = React.createClass({
+const SidebarView = React.createClass({
   getInitialState: function() {
     return getSubscriptions();
   },
 
   componentDidMount: function() {
     listenerToken = SubscriptionStore.addListener(this._onChange)
+    $(document).scroll(function() {
+      $('.sidebar').css({
+        'left': -$(document).scrollLeft()
+      })
+    })
   },
 
   componentWillUnmount: function() {
@@ -32,9 +37,9 @@ const Sidebar = React.createClass({
 
   render: function() {
 
-  // if (this.state.subscriptions.length < 1) {
-//   return null
-// }
+    // if (this.state.subscriptions.length < 1) {
+    //   return null
+    // }
 
     this.state.subscriptions.sort(function(a, b) {
       return b.collectionName - a.collectionName;
@@ -50,4 +55,4 @@ const Sidebar = React.createClass({
   }
 });
 
-module.exports = Sidebar;
+module.exports = SidebarView;

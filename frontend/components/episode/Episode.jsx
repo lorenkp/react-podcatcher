@@ -24,7 +24,7 @@ const Episode = React.createClass({
         played: true
       })
     }
-    AudioPlayerActions.playPodcast(podcastId, epiGUID)
+    AudioPlayerActions.loadPodcast(podcastId, epiGUID)
   },
 
   played: function() {

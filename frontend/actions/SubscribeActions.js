@@ -23,4 +23,8 @@ module.exports = {
     });
     ApiUtil.unsubscribe(subId);
   }
+
+// fetchNewReleases: function() {
+//   ApiUtil.fetchNewReleases();
+// }
 }

@@ -1,10 +1,14 @@
 module.exports = {
-  fetchSearchResults: function(term) {
+
+  fetchEpisodes: function(collectionId, feedUrl) {
     $.ajax({
       method: 'GET',
-      url: 'api/search/' + encodeURIComponent(term),
-      success: function(podcast) {
-        ApiActions.receiveSearchResults(podcast);
+      url: 'api/podcasts/' + collectionId + '/episodes',
+      data: {
+        feedUrl: feedUrl
+      },
+      success: function(episodes) {
+        ApiActions.receivedEpisodes(episodes);
       }
     });
   },
@@ -19,15 +23,22 @@ module.exports = {
     });
   },
 
-  fetchEpisodes: function(collectionId, feedUrl) {
+  fetchSearchResults: function(term) {
     $.ajax({
       method: 'GET',
-      url: 'api/podcasts/' + collectionId + '/episodes',
-      data: {
-        feedUrl: feedUrl
-      },
-      success: function(episodes) {
-        ApiActions.receivedEpisodes(episodes);
+      url: 'api/search/' + encodeURIComponent(term),
+      success: function(podcast) {
+        ApiActions.receiveSearchResults(podcast);
+      }
+    });
+  },
+
+  fetchNewReleases: function() {
+    $.ajax({
+      method: 'GET',
+      url: 'api/subscriptions/new_releases',
+      success: function(newReleases) {
+        ApiActions.receivedNewReleases(newReleases)
       }
     });
   },

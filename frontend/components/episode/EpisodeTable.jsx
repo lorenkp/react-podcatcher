@@ -64,7 +64,6 @@ const EpisodeTable = React.createClass({
   // },
 
   render: function() {
-
     if (typeof this.props.episodes === 'undefined' || this.props.episodes.length < 1) {
       return null
     }
@@ -74,7 +73,6 @@ const EpisodeTable = React.createClass({
 
     return (
       <div>
-        hello
         { this.props.episodes.map(function(episode, index) {
             return (
               <Episode key={ index } episodeInfo={ episode } podcastId={ podcastId }
